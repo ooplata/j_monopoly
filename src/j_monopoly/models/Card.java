@@ -9,7 +9,7 @@ public class Card {
     public final CardType cardType;
 
     /**
-     * A title that uniquely identifies this card.
+     * A title for this card.
      */
     public final String title;
 
