@@ -60,16 +60,6 @@ public class PropertyCard extends Card {
     public final int rentWithHotel;
 
     /**
-     * How much you get for the mortgage of this property.
-     */
-    public final int mortgage;
-
-    /**
-     * The cost of reversing the mortgage for this property.
-     */
-    public final int reverseMortgage;
-
-    /**
      * Initializes a new instance of a property card.
      */
     public PropertyCard(String title,
@@ -83,9 +73,7 @@ public class PropertyCard extends Card {
                         int rentWithTwoHouses,
                         int rentWithThreeHouses,
                         int rentWithFourHouses,
-                        int rentWithHotel,
-                        int mortgage,
-                        int reverseMortgage) {
+                        int rentWithHotel) {
         super(CardType.PROPERTY, title, description);
 
         this.group = group;
@@ -98,7 +86,5 @@ public class PropertyCard extends Card {
         this.rentWithThreeHouses = rentWithThreeHouses;
         this.rentWithFourHouses = rentWithFourHouses;
         this.rentWithHotel = rentWithHotel;
-        this.mortgage = mortgage;
-        this.reverseMortgage = reverseMortgage;
     }
 }

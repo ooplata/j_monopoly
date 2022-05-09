@@ -20,11 +20,6 @@ public class Property {
     private Boolean isGroupOwned = false;
 
     /**
-     * Whether this property is mortgaged by any player. Defaults to false.
-     */
-    private Boolean isMortgaged = false;
-
-    /**
      * Amount of houses in this property. If the value is 5, it means the
      * property has a single hotel.
      */
