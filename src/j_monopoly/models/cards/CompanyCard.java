@@ -18,22 +18,15 @@ public class CompanyCard extends Card {
     public final int cost;
 
     /**
-     * Path to an image that's shown to the player.
-     */
-    public final String imagePath;
-
-    /**
      * Initializes a new instance of a company card.
      */
     public CompanyCard(String title,
                        String description,
                        int actionId,
-                       int cost,
-                       String imagePath) {
+                       int cost) {
         super(CardType.COMPANY, title, description);
 
         this.actionId = actionId;
         this.cost = cost;
-        this.imagePath = imagePath;
     }
 }

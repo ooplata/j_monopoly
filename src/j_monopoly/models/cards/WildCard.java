@@ -13,20 +13,13 @@ public class WildCard extends Card {
     public final int actionId;
 
     /**
-     * Path to an image that's shown to the player.
-     */
-    public final String imagePath;
-
-    /**
      * Initializes a new instance of a wild card.
      */
     public WildCard(String title,
                     String description,
-                    int actionId,
-                    String imagePath) {
+                    int actionId) {
         super(CardType.WILD, title, description);
 
         this.actionId = actionId;
-        this.imagePath = imagePath;
     }
 }
