@@ -56,4 +56,46 @@ public class Property {
                 return card.rent;
         }
     }
+
+    /**
+     * Gets the amount of houses in this property. Return
+     * value of 5 indicates a single hotel.
+     */
+    public int getHouses() {
+        return houses;
+    }
+
+    /**
+     * Adds the specified number of houses to this property.
+     * @param amount Amount of houses to add.
+     * @return Whether the houses were added.
+     */
+    public boolean addHouses(int amount) {
+        int cost = getCostForNewHouses(amount);
+        if (cost != 0)
+            houses += amount;
+
+        return cost != 0;
+    }
+
+    /**
+     * Gets the cost of adding the specified number of houses
+     * to this property.
+     * @param amount Amount of houses to add.
+     * @return The amount of money the user should pay for the
+     * houses. If the specified number of houses is invalid, this
+     * value will be 0.
+     */
+    public int getCostForNewHouses(int amount) {
+        if (amount < 1 || houses + amount > 5)
+            return 0;
+
+        // If the player now has a hotel, calculate the price needed
+        // for one hotel, plus the amount of houses minus one
+        if (houses + amount == 5) {
+            amount--;
+            return (card.houseCost * amount) + card.hotelCost;
+        }
+        return card.houseCost * amount;
+    }
 }
