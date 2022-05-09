@@ -1,4 +1,4 @@
-package j_monopoly.models;
+package j_monopoly.models.cards;
 
 import j_monopoly.enums.CardType;
 

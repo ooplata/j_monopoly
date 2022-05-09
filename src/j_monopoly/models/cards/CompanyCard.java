@@ -1,7 +1,6 @@
 package j_monopoly.models.cards;
 
 import j_monopoly.enums.CardType;
-import j_monopoly.models.Card;
 
 /**
  * Defines a card of type company.
