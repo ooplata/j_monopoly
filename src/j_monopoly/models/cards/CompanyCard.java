@@ -5,12 +5,7 @@ import j_monopoly.enums.CardType;
 /**
  * Defines a card of type company.
  */
-public class CompanyCard extends Card {
-    /**
-     * A number that identifies the action this card should perform.
-     */
-    public final int actionId;
-
+public class CompanyCard extends ActionCard {
     /**
      * The cost of this property.
      */
@@ -23,9 +18,8 @@ public class CompanyCard extends Card {
                        String description,
                        int actionId,
                        int cost) {
-        super(CardType.COMPANY, title, description);
+        super(CardType.COMPANY, title, description, actionId);
 
-        this.actionId = actionId;
         this.cost = cost;
     }
 }
