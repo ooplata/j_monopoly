@@ -13,6 +13,11 @@ public class CompanyCard extends Card {
     public final int actionId;
 
     /**
+     * The cost of this property.
+     */
+    public final int cost;
+
+    /**
      * Path to an image that's shown to the player.
      */
     public final String imagePath;
@@ -23,10 +28,12 @@ public class CompanyCard extends Card {
     public CompanyCard(String title,
                        String description,
                        int actionId,
+                       int cost,
                        String imagePath) {
         super(CardType.COMPANY, title, description);
 
         this.actionId = actionId;
+        this.cost = cost;
         this.imagePath = imagePath;
     }
 }

@@ -13,6 +13,11 @@ public class PropertyCard extends Card {
     public final String group;
 
     /**
+     * The cost of this property.
+     */
+    public final int cost;
+
+    /**
      * The cost of rent for this property when you own no houses, hotels or
      * entire groups.
      */
@@ -65,6 +70,7 @@ public class PropertyCard extends Card {
     public PropertyCard(String title,
                         String description,
                         String group,
+                        int cost,
                         int rent,
                         int rentWithGroup,
                         int houseCost,
@@ -77,6 +83,7 @@ public class PropertyCard extends Card {
         super(CardType.PROPERTY, title, description);
 
         this.group = group;
+        this.cost = cost;
         this.rent = rent;
         this.rentWithGroup = rentWithGroup;
         this.houseCost = houseCost;
