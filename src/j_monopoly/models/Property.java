@@ -11,13 +11,13 @@ public class Property {
     /**
      * Whether this property is owned by any player. Defaults to false.
      */
-    private Boolean isOwned = false;
+    public Boolean isOwned = false;
 
     /**
      * Whether this property's group is fully owned by any player.
      * Defaults to false.
      */
-    private Boolean isGroupOwned = false;
+    public Boolean isGroupOwned = false;
 
     /**
      * Amount of houses in this property. If the value is 5, it means the
