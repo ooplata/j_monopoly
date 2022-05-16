@@ -5,16 +5,11 @@ import j_monopoly.enums.CardType;
 /**
  * Defines a card of type property.
  */
-public class PropertyCard extends Card {
+public class PropertyCard extends PurchasableCard {
     /**
      * The group this card belongs to, generally a color.
      */
     public final String group;
-
-    /**
-     * The cost of this property.
-     */
-    public final int cost;
 
     /**
      * The cost of rent for this property when you own no houses, hotels or
@@ -79,10 +74,9 @@ public class PropertyCard extends Card {
                         int rentWithThreeHouses,
                         int rentWithFourHouses,
                         int rentWithHotel) {
-        super(CardType.PROPERTY, title, description);
+        super(CardType.PROPERTY, title, description, cost);
 
         this.group = group;
-        this.cost = cost;
         this.rent = rent;
         this.rentWithGroup = rentWithGroup;
         this.houseCost = houseCost;
