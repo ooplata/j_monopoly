@@ -28,7 +28,7 @@ public class Player {
      */
     public Property getPropertyByTitle(String title) {
         for (Property prop : properties) {
-            if (Objects.equals(prop.card.title, title)) {
+            if (Objects.equals(prop.info.title, title)) {
                 return prop;
             }
         }
@@ -42,7 +42,7 @@ public class Player {
     public int ownedPropertiesInGroup(String group) {
         int i = 0;
         for (Property prop : properties) {
-            if (Objects.equals(prop.card.group, group)) {
+            if (Objects.equals(prop.info.group, group)) {
                 i++;
             }
         }
@@ -63,19 +63,19 @@ public class Player {
      * @return The result of the purchase.
      */
     public PropertyPurchaseResult purchaseProperty(Property property) {
-        if (property.card.cost > money) return PropertyPurchaseResult.NOT_PURCHASED;
+        if (property.info.cost > money) return PropertyPurchaseResult.NOT_PURCHASED;
 
-        money -= property.card.cost;
+        money -= property.info.cost;
 
         property.isOwned = true;
         properties.add(property);
 
         // If the full group is now owned, update the other properties
-        String group = property.card.group;
-        if (ownedPropertiesInGroup(group) == property.card.amountInGroup) {
+        String group = property.info.group;
+        if (ownedPropertiesInGroup(group) == property.info.amountInGroup) {
             groups.add(group);
             for (Property prop : properties) {
-                if (Objects.equals(prop.card.group, group)) {
+                if (Objects.equals(prop.info.group, group)) {
                     prop.isGroupOwned = true;
                 }
             }

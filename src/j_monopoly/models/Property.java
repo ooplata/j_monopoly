@@ -6,7 +6,7 @@ import j_monopoly.models.cards.PropertyCard;
  * Defines a property. Gets its info from a PropertyCard object.
  */
 public class Property {
-    public final PropertyCard card;
+    public final PropertyCard info;
 
     /**
      * Whether this property is owned by any player. Defaults to false.
@@ -25,8 +25,8 @@ public class Property {
      */
     private int houses = 0;
 
-    public Property(PropertyCard card) {
-        this.card = card;
+    public Property(PropertyCard info) {
+        this.info = info;
     }
 
     /**
@@ -35,20 +35,20 @@ public class Property {
     public int getRent() {
         switch (houses) {
             case 1:
-                return card.rentWithHouse;
+                return info.rentWithHouse;
             case 2:
-                return card.rentWithTwoHouses;
+                return info.rentWithTwoHouses;
             case 3:
-                return card.rentWithThreeHouses;
+                return info.rentWithThreeHouses;
             case 4:
-                return card.rentWithFourHouses;
+                return info.rentWithFourHouses;
             case 5:
-                return card.rentWithHotel;
+                return info.rentWithHotel;
             default:
                 if (isGroupOwned) {
-                    return card.rentWithGroup;
+                    return info.rentWithGroup;
                 }
-                return card.rent;
+                return info.rent;
         }
     }
 
@@ -89,8 +89,8 @@ public class Property {
         // for one hotel, plus the amount of houses minus one
         if (houses + amount == 5) {
             amount--;
-            return (card.houseCost * amount) + card.hotelCost;
+            return (info.houseCost * amount) + info.hotelCost;
         }
-        return card.houseCost * amount;
+        return info.houseCost * amount;
     }
 }
