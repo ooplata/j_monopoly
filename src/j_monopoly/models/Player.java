@@ -47,4 +47,11 @@ public class Player {
         }
         return i;
     }
+
+    /**
+     * Returns whether the specified group is owned.
+     */
+    public boolean isGroupOwned(String group) {
+        return groups.contains(group);
+    }
 }
