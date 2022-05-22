@@ -1,5 +1,6 @@
 package j_monopoly.models;
 
+import j_monopoly.enums.PropertyPurchaseResult;
 import j_monopoly.models.cards.PurchasableActionCard;
 
 import java.util.LinkedList;
@@ -53,5 +54,34 @@ public class Player {
      */
     public boolean isGroupOwned(String group) {
         return groups.contains(group);
+    }
+
+    /**
+     * Purchases the specified property if possible. This method automatically
+     * manages group ownership when necessary.
+     * @param property Property to purchase.
+     * @return The result of the purchase.
+     */
+    public PropertyPurchaseResult purchaseProperty(Property property) {
+        if (property.card.cost > money) return PropertyPurchaseResult.NOT_PURCHASED;
+
+        money -= property.card.cost;
+
+        property.isOwned = true;
+        properties.add(property);
+
+        // If the full group is now owned, update the other properties
+        String group = property.card.group;
+        if (ownedPropertiesInGroup(group) == property.card.amountInGroup) {
+            groups.add(group);
+            for (Property prop : properties) {
+                if (Objects.equals(prop.card.group, group)) {
+                    prop.isGroupOwned = true;
+                }
+            }
+            return PropertyPurchaseResult.GROUP_PURCHASED;
+        }
+
+        return PropertyPurchaseResult.PURCHASED;
     }
 }
