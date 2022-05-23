@@ -82,4 +82,17 @@ public class Player {
 
         return PropertyPurchaseResult.PURCHASED;
     }
+
+    /**
+     * Tries to pay rent for the specified property. If the player can
+     * pay, automatically subtracts the required amount.
+     * @return true if the player can pay rent, false otherwise.
+     */
+    public boolean tryPayRent(Property property) {
+        int rent = property.getRent();
+        if (rent > money) return false;
+
+        money -= rent;
+        return true;
+    }
 }
