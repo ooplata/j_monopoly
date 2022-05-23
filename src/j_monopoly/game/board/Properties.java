@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 
-public class Properties {
+public final class Properties {
     public static LinkedList<Property> properties = new LinkedList<>();
 
     /**
