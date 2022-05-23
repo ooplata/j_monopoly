@@ -1,12 +1,37 @@
 package j_monopoly.game.board;
 
+import j_monopoly.assets.Resources;
+import j_monopoly.models.Property;
 import j_monopoly.models.cards.PropertyCard;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+
 public class Properties {
+    public static LinkedList<Property> properties = new LinkedList<>();
+
+    /**
+     * Populates the properties list with data from the default
+     * properties file.
+     */
+    public static void populateList() {
+        try (InputStream propStrm = Resources.class.getResourceAsStream("Properties.txt")) {
+            assert propStrm != null;
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(propStrm));
+            reader.lines().forEach(Properties::addPropertyToList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Gets a property card from a comma space (", ") separated string.
      */
-    public PropertyCard getPropertyCardFromString(String str) {
+    public static PropertyCard getPropertyCardFromString(String str) {
         String[] split = str.split(", ");
 
         String title = split[0];
@@ -41,5 +66,14 @@ public class Properties {
                 withFourHouse,
                 withHotel
         );
+    }
+
+    private static void addPropertyToList(String str) {
+        if (str.startsWith("#") || str.isEmpty()) return;
+
+        PropertyCard card = getPropertyCardFromString(str);
+        Property prop = new Property(card);
+
+        properties.add(prop);
     }
 }
