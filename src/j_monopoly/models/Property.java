@@ -62,6 +62,7 @@ public class Property {
 
     /**
      * Adds the specified number of houses to this property.
+     *
      * @param amount Amount of houses to add.
      * @return Whether the houses were added.
      */
@@ -76,6 +77,7 @@ public class Property {
     /**
      * Gets the cost of adding the specified number of houses
      * to this property.
+     *
      * @param amount Amount of houses to add.
      * @return The amount of money the user should pay for the
      * houses. If the specified number of houses is invalid, this

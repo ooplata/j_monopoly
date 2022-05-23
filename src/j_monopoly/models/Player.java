@@ -10,6 +10,11 @@ public class Player {
     private final LinkedList<String> groups = new LinkedList<>();
 
     /**
+     * Whether the player is bankrupt.
+     */
+    public boolean bankrupt;
+
+    /**
      * Amount of money the player has.
      */
     public int money = 0;
@@ -21,6 +26,7 @@ public class Player {
 
     /**
      * Gets a specific property by its title.
+     *
      * @return The property with the specified title. A null return value
      * indicates the property is not owned.
      */
@@ -57,6 +63,7 @@ public class Player {
     /**
      * Purchases the specified property if possible. This method automatically
      * manages group ownership when necessary.
+     *
      * @param property Property to purchase.
      * @return The result of the purchase.
      */
@@ -86,6 +93,7 @@ public class Player {
     /**
      * Tries to pay rent for the specified property. If the player can
      * pay, automatically subtracts the required amount.
+     *
      * @return true if the player can pay rent, false otherwise.
      */
     public boolean tryPayRent(Property property) {
