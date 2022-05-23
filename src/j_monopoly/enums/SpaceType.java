@@ -14,7 +14,7 @@ public enum SpaceType {
      * The space contains a property, player can buy the property,
      * or pay rent if necessary.
      */
-    PROPERTY_SPACE,
+    PROPERTY,
 
     /**
      * The space indicates the player must take a chance card and
