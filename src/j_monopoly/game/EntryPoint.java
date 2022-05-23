@@ -9,7 +9,7 @@ public class EntryPoint {
     public static void main(String[] args) {
         JFrame frame = MainPage.createFrame();
 
-        frame.setSize(new Dimension(576, 640));
+        frame.setSize(new Dimension(576, 704));
         frame.setResizable(false);
 
         frame.setVisible(true);
