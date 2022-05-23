@@ -1,7 +1,6 @@
 package j_monopoly.models;
 
 import j_monopoly.enums.PropertyPurchaseResult;
-import j_monopoly.models.cards.PurchasableActionCard;
 
 import java.util.LinkedList;
 import java.util.Objects;
@@ -9,7 +8,6 @@ import java.util.Objects;
 public class Player {
     private final LinkedList<Property> properties = new LinkedList<>();
     private final LinkedList<String> groups = new LinkedList<>();
-    private final LinkedList<PurchasableActionCard> actionCards = new LinkedList<>();
 
     /**
      * Amount of money the player has.
