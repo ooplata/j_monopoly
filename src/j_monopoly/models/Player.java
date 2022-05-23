@@ -4,6 +4,7 @@ import j_monopoly.enums.PropertyPurchaseResult;
 
 import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Random;
 
 public class Player {
     private final LinkedList<Property> properties = new LinkedList<>();
@@ -15,14 +16,71 @@ public class Player {
     public boolean bankrupt;
 
     /**
+     * Whether the player is in jail.
+     */
+    public boolean inJail;
+
+    /**
      * Amount of money the player has.
      */
     public int money = 0;
 
     /**
+     * 0 based index of the space the player's in.
+     */
+    public int space = 0;
+
+    /**
      * Amount of get out of jail free cards the player has.
      */
     public int outOfJailCards = 0;
+
+    /**
+     * Moves forward the specified number of spaces.
+     *
+     * @return Whether the player passed go.
+     */
+    public boolean moveForward(int spaces) {
+        space += spaces;
+
+        // If we're past the last space, loop back
+        if (space >= 32) {
+            space -= 32;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Moves back the specified number of spaces.
+     *
+     * @return Whether the player passed go.
+     */
+    public boolean moveBack(int spaces) {
+        space -= spaces;
+
+        // If we're before the initial space, loop back
+        if (space < 0) {
+            space += 32;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Rolls a single 1 to 6 die, advancing the required number
+     * of spaces and handling bound checks automatically.
+     *
+     * @param moveBackwards Whether the player should move backwards.
+     * @return Whether the player passed go.
+     */
+    public boolean rollSingleDie(boolean moveBackwards) {
+        Random rand = new Random();
+        int roll = rand.nextInt(1, 7);
+
+        if (moveBackwards) return moveBack(roll);
+        else return moveForward(roll);
+    }
 
     /**
      * Gets a specific property by its title.
