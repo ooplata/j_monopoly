@@ -12,19 +12,6 @@ public enum CardType {
     PROPERTY,
 
     /**
-     * A company card. When landing on a space with it, you can purchase it
-     * if not taken. If taken, the card may specify the actions that follow.
-     */
-    COMPANY,
-
-    /**
-     * A railroad card. When landing on a space with it, you can purchase it
-     * if not taken. If taken, the player must pay a certain amount based on
-     * the railroads the owner has.
-     */
-    RAILROAD,
-
-    /**
      * A wild card. If you land on a space with it, you take a wild card, at
      * which point you must perform the action specified in the card.
      */
