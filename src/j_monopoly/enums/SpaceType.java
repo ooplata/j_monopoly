@@ -5,6 +5,12 @@ package j_monopoly.enums;
  */
 public enum SpaceType {
     /**
+     * The Go space. When a player passes it or lands on it, they
+     * get 200 bucks.
+     */
+    GO,
+
+    /**
      * The space contains a property, player can buy the property,
      * or pay rent if necessary.
      */
@@ -23,13 +29,19 @@ public enum SpaceType {
     COMMUNITY_CHEST,
 
     /**
-     * The space indicates the player must immediately go to jail.
-     */
-    GO_TO_JAIL,
-
-    /**
      * The space essentially does nothing, a player that lands on it
      * is not affected in any way.
      */
-    PASS,
+    FREE_PASS,
+
+    /**
+     * This space is where jailed players go. Players that land
+     * on it won't be affected.
+     */
+    JAIL,
+
+    /**
+     * The space indicates the player must immediately go to jail.
+     */
+    GO_TO_JAIL,
 }
