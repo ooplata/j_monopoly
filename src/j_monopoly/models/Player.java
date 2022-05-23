@@ -68,18 +68,13 @@ public class Player {
     }
 
     /**
-     * Rolls a single 1 to 6 die, advancing the required number
-     * of spaces and handling bound checks automatically.
+     * Rolls a single 1 to 6 die.
      *
-     * @param moveBackwards Whether the player should move backwards.
-     * @return Whether the player passed go.
+     * @return The number that was rolled.
      */
-    public boolean rollSingleDie(boolean moveBackwards) {
+    public int rollSingleDie() {
         Random rand = new Random();
-        int roll = rand.nextInt(1, 7);
-
-        if (moveBackwards) return moveBack(roll);
-        else return moveForward(roll);
+        return rand.nextInt(1, 7);
     }
 
     /**
