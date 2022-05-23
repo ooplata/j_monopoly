@@ -1,0 +1,39 @@
+# Bottom Column
+Go
+Property
+CChest
+Property
+Property
+Chance
+Property
+Property
+Jail
+
+# Left Row
+Property
+Property
+Property
+Property
+CChest
+Property
+Property
+Free
+
+# Top Column
+Property
+Chance
+Property
+Property
+Property
+Property
+Property
+GoToJail
+
+# Right Row
+Property
+Property
+CChest
+Property
+Chance
+Property
+Property
