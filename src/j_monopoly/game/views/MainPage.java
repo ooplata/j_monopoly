@@ -13,4 +13,6 @@ public final class MainPage {
     }
 
     private JPanel root;
+    private JPanel topPanel;
+    private JPanel bottomPanel;
 }
