@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class MainPage {
     public static JFrame createFrame() {
-        JFrame frame = new JFrame("MainPage");
+        JFrame frame = new JFrame("Monopoly");
         frame.setContentPane(new MainPage().root);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
