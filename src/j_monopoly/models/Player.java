@@ -23,7 +23,7 @@ public class Player {
     /**
      * Amount of money the player has.
      */
-    public int money = 0;
+    public int money = 1500;
 
     /**
      * 0 based index of the space the player's in.
