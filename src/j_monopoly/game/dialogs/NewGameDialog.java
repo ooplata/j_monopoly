@@ -1,6 +1,7 @@
-package j_monopoly.game.views;
+package j_monopoly.game.dialogs;
 
 import j_monopoly.game.board.GameHelper;
+import j_monopoly.game.views.MainPage;
 
 import javax.swing.*;
 import java.awt.*;
