@@ -1,9 +1,9 @@
 package j_monopoly.game.views;
 
 import j_monopoly.assets.Resources;
-import j_monopoly.enums.SpaceType;
-import j_monopoly.game.board.Properties;
 import j_monopoly.game.board.Spaces;
+import j_monopoly.models.Property;
+import j_monopoly.models.Space;
 import j_monopoly.models.cards.PropertyCard;
 
 import javax.imageio.ImageIO;
@@ -58,33 +58,23 @@ public final class MainPage {
         JPanel[][] panelHolder = new JPanel[9][9];
 
         int spaceCounter = 0;
-        int propCounter = 0;
-
         for (int i = 8; i >= 0; i--) {
-            SpaceType space = Spaces.spaces.get(spaceCounter);
-            panelHolder[i][8] = createSpacePanel(space, propCounter);
-            if (space == SpaceType.PROPERTY) propCounter++;
+            panelHolder[i][8] = createSpacePanel(spaceCounter);
             spaceCounter++;
         }
 
         for (int i = 7; i >= 0; i--) {
-            SpaceType space = Spaces.spaces.get(spaceCounter);
-            panelHolder[0][i] = createSpacePanel(space, propCounter);
-            if (space == SpaceType.PROPERTY) propCounter++;
+            panelHolder[0][i] = createSpacePanel(spaceCounter);
             spaceCounter++;
         }
 
         for (int i = 1; i <= 8; i++) {
-            SpaceType space = Spaces.spaces.get(spaceCounter);
-            panelHolder[i][0] = createSpacePanel(space, propCounter);
-            if (space == SpaceType.PROPERTY) propCounter++;
+            panelHolder[i][0] = createSpacePanel(spaceCounter);
             spaceCounter++;
         }
 
         for (int i = 1; i <= 7; i++) {
-            SpaceType space = Spaces.spaces.get(spaceCounter);
-            panelHolder[8][i] = createSpacePanel(space, propCounter);
-            if (space == SpaceType.PROPERTY) propCounter++;
+            panelHolder[8][i] = createSpacePanel(spaceCounter);
             spaceCounter++;
         }
 
@@ -101,7 +91,7 @@ public final class MainPage {
         }
     }
 
-    private JPanel createSpacePanel(SpaceType space, int propCounter) {
+    private JPanel createSpacePanel(int space) {
         JPanel basePanel = new JPanel();
         basePanel.setSize(64, 64);
 
@@ -109,20 +99,16 @@ public final class MainPage {
         imgLabel.setVerticalAlignment(SwingConstants.CENTER);
         imgLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        String resName;
-        switch (space) {
-            case GO -> resName = "Go.png";
-            case PROPERTY -> {
-                PropertyCard info = Properties.properties.get(propCounter).info;
-                resName = info.group + ".png";
-            }
-            case CHANCE -> resName = "Chance.png";
-            case COMMUNITY_CHEST -> resName = "CChest.png";
-            case FREE_PASS -> resName = "Free.png";
-            case JAIL -> resName = "Jail.png";
-            case GO_TO_JAIL -> resName = "GoJail.png";
-            default -> resName = "Empty.png";
-        }
+        Space<Object> curr = Spaces.spaces.get(space);
+        String resName = switch (curr.type) {
+            case GO -> "Go.png";
+            case PROPERTY -> ((Property) curr.data).info.group + ".png";
+            case CHANCE -> "Chance.png";
+            case COMMUNITY_CHEST -> "CChest.png";
+            case FREE_PASS -> "Free.png";
+            case JAIL -> "Jail.png";
+            case GO_TO_JAIL -> "GoJail.png";
+        };
 
         try {
             BufferedImage pic = ImageIO.read(Resources.getResource(resName));

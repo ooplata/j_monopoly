@@ -28,8 +28,8 @@ public final class GameHelper {
             Players.players.add(new Player());
         }
 
-        Properties.properties.clear();
-        Properties.populateList();
+        Spaces.spaces.clear();
+        Spaces.populateList();
     }
 
     /**
@@ -54,7 +54,7 @@ public final class GameHelper {
         int full = first + second;
 
         boolean passed = curr.moveForward(full);
-        SpaceType landedOn = Spaces.spaces.get(curr.space);
+        SpaceType landedOn = Spaces.spaces.get(curr.space).type;
 
         return new RollResult(landedOn, first, second, full, passed);
     }

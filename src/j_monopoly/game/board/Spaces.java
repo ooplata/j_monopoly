@@ -2,6 +2,9 @@ package j_monopoly.game.board;
 
 import j_monopoly.assets.Resources;
 import j_monopoly.enums.SpaceType;
+import j_monopoly.models.Property;
+import j_monopoly.models.Space;
+import j_monopoly.models.cards.PropertyCard;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 
 public final class Spaces {
-    public static LinkedList<SpaceType> spaces = new LinkedList<>();
+    public static LinkedList<Space<Object>> spaces = new LinkedList<>();
 
     /**
      * Populates the spaces list with data from the default
@@ -18,12 +21,37 @@ public final class Spaces {
      */
     public static void populateList() {
         try (InputStream spaceStrm = Resources.getResourceAsStream("Spaces.txt")) {
-            assert spaceStrm != null;
+            try (InputStream propStrm = Resources.getResourceAsStream("Properties.txt")) {
+                assert spaceStrm != null;
+                assert propStrm != null;
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(spaceStrm));
-            reader.lines().forEach(Spaces::addSpaceToList);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+                BufferedReader spaceReader = new BufferedReader(new InputStreamReader(spaceStrm));
+                BufferedReader propReader = new BufferedReader(new InputStreamReader(propStrm));
+
+                spaceReader.lines().forEach((s -> {
+                    if (s.isEmpty() || s.startsWith("#"))
+                        return;
+
+                    SpaceType type = getSpaceTypeFromString(s);
+                    switch (type) {
+                        case PROPERTY -> {
+                            try {
+                                String line = "#";
+                                while (line.isEmpty() || line.startsWith("#"))
+                                    line = propReader.readLine();
+
+                                PropertyCard card = getPropertyCardFromString(line);
+                                Property prop = new Property(card);
+                                spaces.add(new Space<>(prop, type));
+                            } catch (IOException ignored) {
+                            }
+                        }
+                        default -> spaces.add(new Space<>(0, type));
+                    }
+                }));
+            } catch (IOException ignored) {
+            }
+        } catch (IOException ignored) {
         }
     }
 
@@ -38,14 +66,33 @@ public final class Spaces {
             case "Free" -> SpaceType.FREE_PASS;
             case "Jail" -> SpaceType.JAIL;
             case "GoToJail" -> SpaceType.GO_TO_JAIL;
-            default -> SpaceType.PROPERTY;
+            case "Property" -> SpaceType.PROPERTY;
+            default -> throw new IllegalArgumentException(str + " is not a valid property type.");
         };
     }
 
-    private static void addSpaceToList(String str) {
-        if (str.startsWith("#") || str.isEmpty()) return;
+    /**
+     * Gets a property card from a comma space (", ") separated string.
+     */
+    public static PropertyCard getPropertyCardFromString(String str) {
+        String[] split = str.split(", ");
 
-        SpaceType space = getSpaceTypeFromString(str);
-        spaces.add(space);
+        String title = split[0];
+        String desc = split[1];
+        String group = split[2];
+
+        int inGrp = Integer.parseInt(split[3]);
+        int cost = Integer.parseInt(split[4]);
+        int rent = Integer.parseInt(split[5]);
+        int rentWithGrp = Integer.parseInt(split[6]);
+        int house = Integer.parseInt(split[7]);
+        int hotel = Integer.parseInt(split[8]);
+        int withHouse = Integer.parseInt(split[9]);
+        int withTwoHouse = Integer.parseInt(split[10]);
+        int withThreeHouse = Integer.parseInt(split[11]);
+        int withFourHouse = Integer.parseInt(split[12]);
+        int withHotel = Integer.parseInt(split[13]);
+
+        return new PropertyCard(title, desc, group, inGrp, cost, rent, rentWithGrp, house, hotel, withHouse, withTwoHouse, withThreeHouse, withFourHouse, withHotel);
     }
 }
