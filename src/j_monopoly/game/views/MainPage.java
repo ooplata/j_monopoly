@@ -4,7 +4,6 @@ import j_monopoly.assets.Resources;
 import j_monopoly.game.board.Spaces;
 import j_monopoly.models.Property;
 import j_monopoly.models.Space;
-import j_monopoly.models.cards.PropertyCard;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
