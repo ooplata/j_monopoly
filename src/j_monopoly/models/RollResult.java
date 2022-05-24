@@ -32,22 +32,15 @@ public final class RollResult {
      */
     public final boolean passedGo;
 
-    /**
-     * Whether this player ended up bankrupt.
-     */
-    public final boolean isBankrupt;
-
     public RollResult(SpaceType space,
                       int firstDie,
                       int secondDie,
                       int result,
-                      boolean passedGo,
-                      boolean isBankrupt) {
+                      boolean passedGo) {
         this.space = space;
         this.firstDie = firstDie;
         this.secondDie = secondDie;
         this.result = result;
         this.passedGo = passedGo;
-        this.isBankrupt = isBankrupt;
     }
 }
