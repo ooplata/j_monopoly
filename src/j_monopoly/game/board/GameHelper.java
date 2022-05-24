@@ -1,6 +1,8 @@
 package j_monopoly.game.board;
 
+import j_monopoly.enums.SpaceType;
 import j_monopoly.models.Player;
+import j_monopoly.models.RollResult;
 
 public final class GameHelper {
     private static int currentPlayerIndex;
@@ -38,5 +40,22 @@ public final class GameHelper {
         if (currentPlayerIndex >= Players.playerCount()) {
             currentPlayerIndex = 0;
         }
+    }
+
+    /**
+     * Rolls two dice, advances the current player, and
+     * returns the result.
+     */
+    public static RollResult rollTwoDice() {
+        Player curr = getCurrentPlayer();
+
+        int first = curr.rollSingleDie();
+        int second = curr.rollSingleDie();
+        int full = first + second;
+
+        boolean passed = curr.moveForward(full);
+        SpaceType landedOn = Spaces.spaces.get(curr.space);
+
+        return new RollResult(landedOn, first, second, full, passed);
     }
 }
