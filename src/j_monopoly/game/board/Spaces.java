@@ -17,7 +17,7 @@ public final class Spaces {
      * spaces file.
      */
     public static void populateList() {
-        try (InputStream spaceStrm = Resources.class.getResourceAsStream("Spaces.txt")) {
+        try (InputStream spaceStrm = Resources.getResourceAsStream("Spaces.txt")) {
             assert spaceStrm != null;
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(spaceStrm));

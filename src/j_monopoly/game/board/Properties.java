@@ -18,7 +18,7 @@ public final class Properties {
      * properties file.
      */
     public static void populateList() {
-        try (InputStream propStrm = Resources.class.getResourceAsStream("Properties.txt")) {
+        try (InputStream propStrm = Resources.getResourceAsStream("Properties.txt")) {
             assert propStrm != null;
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(propStrm));
