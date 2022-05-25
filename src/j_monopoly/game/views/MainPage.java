@@ -63,6 +63,8 @@ public final class MainPage extends JFrame {
         bottomPanel.add(continueBtn);
         bottomPanel.add(exitBtn);
 
+        getRootPane().setDefaultButton(continueBtn);
+
         setupBoard();
     }
 
