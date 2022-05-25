@@ -5,6 +5,7 @@ import j_monopoly.models.Player;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Objects;
 
 public class CurrentTurnDialog extends JDialog {
     private final Player player;
@@ -53,8 +54,21 @@ public class CurrentTurnDialog extends JDialog {
     }
 
     private void onOK() {
+        handleTurn((String) Objects.requireNonNull(optionBox.getSelectedItem()));
         GameHelper.finishTurn();
         dispose();
+    }
+
+    private void handleTurn(String action) {
+        switch (action) {
+            case outOfJail -> {
+                player.inJail = false;
+                player.outOfJailCards -= 1;
+            }
+            case giveUp -> {
+                GameHelper.bankrupt();
+            }
+        }
     }
 
     private void onCancel() {
