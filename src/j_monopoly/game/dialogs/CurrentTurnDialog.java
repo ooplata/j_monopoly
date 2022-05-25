@@ -43,12 +43,12 @@ public class CurrentTurnDialog extends JDialog {
         money.setText("You have $" + player.money);
 
         optionBox.addItem(roll);
-        if (!player.inJail) {
+        if (!player.isInJail()) {
             optionBox.addItem(checkProps);
             optionBox.addItem(build);
             optionBox.addItem(giveUp);
         } else {
-            if (player.outOfJailCards > 0) {
+            if (player.getOutOfJailCards() > 0) {
                 optionBox.addItem(outOfJail);
             }
         }
@@ -63,15 +63,19 @@ public class CurrentTurnDialog extends JDialog {
     private void handleTurn(String action) {
         switch (action) {
             case outOfJail -> {
-                player.inJail = false;
-                player.outOfJailCards -= 1;
+                player.tryExitJailWithCard();
             }
             case giveUp -> {
                 GameHelper.bankrupt();
             }
             default -> {
-                if (player.inJail) {
+                if (player.isInJail()) {
                     boolean result = tryEscapeJail();
+                    if (result) {
+                        SimpleMessageDialog.createDialog(player.name, "You got out of jail!", "yay!");
+                    } else {
+                        SimpleMessageDialog.createDialog(player.name, "You're still in jail!", "yay..?");
+                    }
                 } else {
                     RollResult result = roll();
                 }
@@ -79,7 +83,7 @@ public class CurrentTurnDialog extends JDialog {
         }
     }
 
-    private RollResult roll() {
+    private RollResult<Object> roll() {
         RollResult result = GameHelper.rollTwoDice();
         return result;
     }
@@ -91,12 +95,12 @@ public class CurrentTurnDialog extends JDialog {
 
             // If the die rolls are equal, take the player out
             if (first == second) {
-                player.inJail = false;
+                player.exitJail();
                 break;
             }
         }
 
-        return !player.inJail;
+        return !player.isInJail();
     }
 
     private void onCancel() {

@@ -10,6 +10,8 @@ public class Player {
     private final LinkedList<Property> properties = new LinkedList<>();
     private final LinkedList<String> groups = new LinkedList<>();
     private boolean bankrupt;
+    private boolean inJail;
+    private int outOfJailCards = 0;
 
     /**
      * The player's name, usually "Player n".
@@ -26,7 +28,16 @@ public class Player {
     /**
      * Whether the player is in jail.
      */
-    public boolean inJail;
+    public boolean isInJail() {
+        return inJail;
+    }
+
+    /**
+     * Amount of get out of jail free cards the player has.
+     */
+    public int getOutOfJailCards() {
+        return outOfJailCards;
+    }
 
     /**
      * Amount of money the player has.
@@ -37,11 +48,6 @@ public class Player {
      * 0 based index of the space the player's in.
      */
     public int space = 0;
-
-    /**
-     * Amount of get out of jail free cards the player has.
-     */
-    public int outOfJailCards = 0;
 
     /**
      * Moves forward the specified number of spaces.
@@ -163,6 +169,45 @@ public class Player {
 
         money -= rent;
         return true;
+    }
+
+    /**
+     * Gives the player the specified amount of out of jail cards.
+     */
+    public void addOutOfJailCards(int amount) {
+        outOfJailCards += amount;
+    }
+
+    /**
+     * Makes the player go to jail, getting them to space 8
+     * without advancing Go.
+     */
+    public void goToJail() {
+        inJail = true;
+        space = 8;
+    }
+
+    /**
+     * Gets the player out of jail. This only updates the result of
+     * isInJail(), it doesn't move the player.
+     */
+    public void exitJail() {
+        inJail = false;
+    }
+
+    /**
+     * Gets the player out of jail with a get out of jail card, only
+     * if any are available. This only updates the result of isInJail(),
+     * it doesn't move the player.
+     */
+    public boolean tryExitJailWithCard() {
+        boolean canExit = outOfJailCards > 0;
+        if (canExit) {
+            inJail = false;
+            outOfJailCards--;
+        }
+
+        return canExit;
     }
 
     /**
