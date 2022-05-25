@@ -1,6 +1,7 @@
 package j_monopoly.game.dialogs;
 
 import j_monopoly.game.board.GameHelper;
+import j_monopoly.game.board.Players;
 import j_monopoly.game.views.MainPage;
 
 import javax.swing.*;
@@ -22,7 +23,6 @@ public class NewGameDialog extends JDialog {
         for (int i = 2; i <= 12; i++) playersComboBox.addItem(i);
 
         buttonOK.addActionListener(e -> onOK());
-
         buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
@@ -44,6 +44,7 @@ public class NewGameDialog extends JDialog {
 
         this.setVisible(false);
         frame.setVisible(true);
+
         dispose();
     }
 

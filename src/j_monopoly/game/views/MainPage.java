@@ -41,7 +41,6 @@ public final class MainPage extends JFrame {
         JPanel bottomPanel = new JPanel();
         topPanel = new JPanel();
 
-
         // Root panel
         root.add(topPanel);
         root.add(bottomPanel);
@@ -54,26 +53,32 @@ public final class MainPage extends JFrame {
         // Bottom panel
         bottomPanel.setLayout(new GridLayout(2, 1, 0, 6));
 
-        JButton nextBtn = new JButton("Next turn");
+        JButton continueBtn = new JButton("Continue");
         JButton exitBtn = new JButton("Exit");
 
-        nextBtn.addActionListener(e -> {
-            GameHelper.startNewTurn();
-            CurrentTurnDialog.createDialog().setVisible(true);
-
-            if (GameHelper.isGameFinished()) {
-                this.setVisible(true);
-                SimpleMessageDialog.createDialog("Game's done!", "We have a winner!", "The winner is... " + Players.getPlayerAt(0).name + "!").setVisible(true);
-                NewGameDialog.createDialog().setVisible(true);
-                dispose();
-            }
-        });
+        continueBtn.addActionListener(e -> startTurn());
         exitBtn.addActionListener(e -> dispose());
 
-        bottomPanel.add(nextBtn);
+        bottomPanel.add(continueBtn);
         bottomPanel.add(exitBtn);
 
         setupBoard();
+    }
+
+    /**
+     * Starts a new turn, automatically checks if the game
+     * should end by the end of the turn.
+     */
+    private void startTurn() {
+        GameHelper.startNewTurn();
+        CurrentTurnDialog.createDialog().setVisible(true);
+
+        if (GameHelper.isGameFinished()) {
+            this.setVisible(true);
+            SimpleMessageDialog.createDialog("Game's done!", "We have a winner!", "The winner is... " + Players.getPlayerAt(0).name + "!").setVisible(true);
+            NewGameDialog.createDialog().setVisible(true);
+            dispose();
+        }
     }
 
     private void setupBoard() {
