@@ -3,6 +3,7 @@ package j_monopoly.game.dialogs;
 import j_monopoly.enums.PropertyPurchaseResult;
 import j_monopoly.game.board.GameHelper;
 import j_monopoly.game.board.Players;
+import j_monopoly.game.dialogs.spaces.PropertySpaceDialog;
 import j_monopoly.models.Player;
 import j_monopoly.models.Property;
 import j_monopoly.models.RollResult;
@@ -113,11 +114,10 @@ public class CurrentTurnDialog extends JDialog {
                         showSimpleDialog("You landed on " + prop.info.title + "!", "That's owned by " + owner.name + ". You paid $" + prop.getRent() + " for rent.");
                     } else {
                         GameHelper.bankrupt();
-                        showSimpleDialog("You can't pay that rent!", "Now you're bankrupt. Do better next time.");
+                        showSimpleDialog("You can't pay rent at " + prop.info.title + "!", "Rent there costs $" + prop.getRent() + ", but you only have $" + player.money + ". Now you're bankrupt. :(");
                     }
                 } else {
-                    PropertyPurchaseResult res = player.purchaseProperty(prop);
-                    showSimpleDialog("You landed on " + prop.info.title + "!", "That's owned by no one. You paid $" + prop.info.cost + " to buy it :)");
+                    PropertySpaceDialog.createDialog(prop, player).setVisible(true);
                 }
             }
             case FREE_PASS -> showSimpleDialog("Free Parking!", "That's all. You can take a nap.");
