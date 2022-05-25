@@ -2,6 +2,7 @@ package j_monopoly.game.dialogs;
 
 import j_monopoly.game.board.GameHelper;
 import j_monopoly.models.Player;
+import j_monopoly.models.RollResult;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -68,7 +69,34 @@ public class CurrentTurnDialog extends JDialog {
             case giveUp -> {
                 GameHelper.bankrupt();
             }
+            default -> {
+                if (player.inJail) {
+                    boolean result = tryEscapeJail();
+                } else {
+                    RollResult result = roll();
+                }
+            }
         }
+    }
+
+    private RollResult roll() {
+        RollResult result = GameHelper.rollTwoDice();
+        return result;
+    }
+
+    private boolean tryEscapeJail() {
+        for (int i = 0; i < 3; i++) {
+            int first = player.rollSingleDie();
+            int second = player.rollSingleDie();
+
+            // If the die rolls are equal, take the player out
+            if (first == second) {
+                player.inJail = false;
+                break;
+            }
+        }
+
+        return !player.inJail;
     }
 
     private void onCancel() {
