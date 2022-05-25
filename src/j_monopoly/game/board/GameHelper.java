@@ -65,4 +65,16 @@ public final class GameHelper {
 
         return new RollResult(landedOn, first, second, full, passed);
     }
+
+    /**
+     * Makes the current player go bankrupt.
+     *
+     * @return The amount of money the player's goods were worth.
+     */
+    public static int bankrupt() {
+        Player curr = getCurrentPlayer();
+        Players.players.removeFirstOccurrence(curr);
+        currentPlayerIndex -= 1;
+        return curr.goBankrupt();
+    }
 }
