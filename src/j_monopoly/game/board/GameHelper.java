@@ -3,6 +3,7 @@ package j_monopoly.game.board;
 import j_monopoly.enums.SpaceType;
 import j_monopoly.models.Player;
 import j_monopoly.models.RollResult;
+import j_monopoly.models.Space;
 
 public final class GameHelper {
     private static int currentPlayerIndex;
@@ -68,7 +69,7 @@ public final class GameHelper {
      * Rolls two dice, advances the current player, and
      * returns the result.
      */
-    public static RollResult rollTwoDice() {
+    public static RollResult<Object> rollTwoDice() {
         Player curr = getCurrentPlayer();
 
         int first = curr.rollSingleDie();
@@ -76,9 +77,9 @@ public final class GameHelper {
         int full = first + second;
 
         boolean passed = curr.moveForward(full);
-        SpaceType landedOn = Spaces.spaces.get(curr.space).type;
+        Space<Object> landedOn = Spaces.spaces.get(curr.space);
 
-        return new RollResult(landedOn, first, second, full, passed);
+        return new RollResult<>(landedOn, first, second, full, passed);
     }
 
     /**

@@ -6,11 +6,11 @@ import j_monopoly.enums.SpaceType;
  * Represents the information regarding the result of a die roll
  * and landing on a space.
  */
-public final class RollResult {
+public final class RollResult<T> {
     /**
-     * The type of space the player landed on.
+     * The space the player landed on.
      */
-    public final SpaceType space;
+    public final Space<T> space;
 
     /**
      * Result of the first die.
@@ -32,7 +32,7 @@ public final class RollResult {
      */
     public final boolean passedGo;
 
-    public RollResult(SpaceType space,
+    public RollResult(Space<T> space,
                       int firstDie,
                       int secondDie,
                       int result,
