@@ -59,7 +59,6 @@ public class CurrentTurnDialog extends JDialog {
 
     private void onOK() {
         handleTurn((String) Objects.requireNonNull(optionBox.getSelectedItem()));
-        GameHelper.finishTurn();
         dispose();
     }
 
@@ -68,10 +67,12 @@ public class CurrentTurnDialog extends JDialog {
             case outOfJail -> {
                 player.tryExitJailWithCard();
                 showSimpleDialog("You used a get out of jail card!", "I too love bribing police officers!");
+                GameHelper.finishTurn();
             }
             case giveUp -> {
                 GameHelper.bankrupt();
                 showSimpleDialog("You gave up!", "That's all. You can now leave.");
+                GameHelper.finishTurn();
             }
             default -> {
                 if (player.isInJail()) {
@@ -89,7 +90,10 @@ public class CurrentTurnDialog extends JDialog {
     }
 
     private void handleRoll(RollResult<Object> result) {
-        if (result.passedGo) showSimpleDialog("You passed Go!",  "You get $200.");
+        this.setVisible(false);
+        RollResultDialog.createDialog(result.firstDie, result.secondDie, false).setVisible(true);
+        if (result.passedGo) showSimpleDialog("You passed Go!", "You get $200.");
+
         switch (result.space.type) {
             case GO -> showSimpleDialog("You landed on Go!", "Want a cookie? Well too bad we only have $200.");
             case PROPERTY -> {
@@ -125,12 +129,17 @@ public class CurrentTurnDialog extends JDialog {
                 showSimpleDialog("You got taken to jail!", "Time to delete the gym, hit your lawyer, and Facebook up.");
             }
         }
+
+        // Only finish turns if player doesn't get doubles
+        if (result.firstDie != result.secondDie) GameHelper.finishTurn();
     }
 
     private boolean tryEscapeJail() {
         for (int i = 0; i < 3; i++) {
             int first = player.rollSingleDie();
             int second = player.rollSingleDie();
+
+            RollResultDialog.createDialog(first, second, true).setVisible(true);
 
             // If the die rolls are equal, take the player out
             if (first == second) {
