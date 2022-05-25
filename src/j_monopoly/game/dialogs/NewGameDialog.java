@@ -5,6 +5,7 @@ import j_monopoly.game.views.MainPage;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Objects;
 
 public class NewGameDialog extends JDialog {
     private JPanel contentPane;
@@ -37,7 +38,7 @@ public class NewGameDialog extends JDialog {
     }
 
     private void onOK() {
-        GameHelper.startNewGame((Integer) playersComboBox.getSelectedItem());
+        GameHelper.startNewGame((Integer) Objects.requireNonNull(playersComboBox.getSelectedItem()));
         JFrame frame = new MainPage();
         frame.setResizable(false);
 
