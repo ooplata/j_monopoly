@@ -9,11 +9,14 @@ import java.util.Random;
 public class Player {
     private final LinkedList<Property> properties = new LinkedList<>();
     private final LinkedList<String> groups = new LinkedList<>();
+    private boolean bankrupt;
 
     /**
      * Whether the player is bankrupt.
      */
-    public boolean bankrupt;
+    public boolean isBankrupt() {
+        return bankrupt;
+    }
 
     /**
      * Whether the player is in jail.
@@ -155,5 +158,31 @@ public class Player {
 
         money -= rent;
         return true;
+    }
+
+    /**
+     * Makes the player go bankrupt, revoking ownership of all properties,
+     * goods, money, and get out of jail cards.
+     *
+     * @return The amount of money the player's goods were worth.
+     */
+    public int goBankrupt() {
+        bankrupt = true;
+        outOfJailCards = 0;
+        inJail = false;
+
+        int worth = 0;
+        worth += money;
+        money = 0;
+
+        for (Property property : properties) {
+            worth += property.revokeOwnership();
+            worth += property.info.cost;
+        }
+
+        properties.clear();
+        groups.clear();
+
+        return worth;
     }
 }
