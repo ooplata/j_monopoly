@@ -15,7 +15,6 @@ public class CurrentTurnDialog extends JDialog {
     private final Player player;
     private boolean hideWhenDone = false;
 
-    private final String roll = "Roll";
     private final String checkProps = "Check properties";
     private final String build = "Build houses";
     private final String giveUp = "Give up";
@@ -46,7 +45,7 @@ public class CurrentTurnDialog extends JDialog {
         playerTurn.setText("Your turn, " + player.name + "!");
         money.setText("You have $" + player.money);
 
-        optionBox.addItem(roll);
+        optionBox.addItem("Roll");
         if (!player.isInJail()) {
             optionBox.addItem(checkProps);
             optionBox.addItem(build);
@@ -67,6 +66,7 @@ public class CurrentTurnDialog extends JDialog {
     private void handleTurn(String action) {
         switch (action) {
             case checkProps -> AllPropertiesDialog.createDialog(player).setVisible(true);
+            case build -> BuildDialog.createDialog(player).setVisible(true);
             case outOfJail -> {
                 player.tryExitJailWithCard();
                 showSimpleDialog("You used a get out of jail card!", "I too love bribing police officers!");
