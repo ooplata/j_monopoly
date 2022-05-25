@@ -1,6 +1,5 @@
 package j_monopoly.game.dialogs;
 
-import j_monopoly.enums.PropertyPurchaseResult;
 import j_monopoly.game.board.GameHelper;
 import j_monopoly.game.board.Players;
 import j_monopoly.game.dialogs.spaces.PropertySpaceDialog;
@@ -14,6 +13,7 @@ import java.util.Objects;
 
 public class CurrentTurnDialog extends JDialog {
     private final Player player;
+    private boolean hideWhenDone = false;
 
     private final String roll = "Roll";
     private final String checkProps = "Check properties";
@@ -60,20 +60,22 @@ public class CurrentTurnDialog extends JDialog {
 
     private void onOK() {
         handleTurn((String) Objects.requireNonNull(optionBox.getSelectedItem()));
-        dispose();
+        if (hideWhenDone) dispose();
+        else setVisible(true);
     }
 
     private void handleTurn(String action) {
         switch (action) {
+            case checkProps -> AllPropertiesDialog.createDialog(player).setVisible(true);
             case outOfJail -> {
                 player.tryExitJailWithCard();
                 showSimpleDialog("You used a get out of jail card!", "I too love bribing police officers!");
-                GameHelper.finishTurn();
+                finishTurn();
             }
             case giveUp -> {
                 GameHelper.bankrupt();
                 showSimpleDialog("You gave up!", "That's all. You can now leave.");
-                GameHelper.finishTurn();
+                finishTurn();
             }
             default -> {
                 if (player.isInJail()) {
@@ -131,7 +133,7 @@ public class CurrentTurnDialog extends JDialog {
         }
 
         // Only finish turns if player doesn't get doubles
-        if (result.firstDie != result.secondDie) GameHelper.finishTurn();
+        if (result.firstDie != result.secondDie) finishTurn();
     }
 
     private boolean tryEscapeJail() {
@@ -154,6 +156,11 @@ public class CurrentTurnDialog extends JDialog {
     private void showSimpleDialog(String header, String content) {
         this.setVisible(false);
         SimpleMessageDialog.createDialog(player.name, header, content).setVisible(true);
+    }
+
+    private void finishTurn() {
+        GameHelper.finishTurn();
+        hideWhenDone = true;
     }
 
     private void onCancel() {
