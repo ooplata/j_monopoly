@@ -68,14 +68,14 @@ public class Property {
      */
     public boolean addHouses(int amount) {
         int cost = getCostForNewHouses(amount);
-        if (cost != 0)
-            houses += amount;
+        if (cost != 0) houses += amount;
 
         return cost != 0;
     }
 
     /**
      * Removes all houses/hotels from the property.
+     *
      * @return The amount of money the houses were bought for.
      */
     public int removeAllHouses() {
@@ -95,8 +95,7 @@ public class Property {
      * value will be 0.
      */
     public int getCostForNewHouses(int amount) {
-        if (amount < 1 || houses + amount > 5)
-            return 0;
+        if (amount < 1 || houses + amount > 5) return 0;
 
         // If the player now has a hotel, calculate the price needed
         // for one hotel, plus the amount of houses minus one
