@@ -74,15 +74,33 @@ public class Property {
     }
 
     /**
+     * Removes the specified number of houses from the property.
+     *
+     * @return The amount of money the houses were bought for.
+     * Returns 0 if the number is invalid.
+     */
+    public int removeHouses(int amount) {
+        if (amount < 1 || amount > houses) return 0;
+
+        int curr = getHouses();
+        houses -= amount;
+
+        return getCostForNewHouses(curr - amount);
+    }
+
+    /**
      * Removes all houses/hotels from the property.
      *
      * @return The amount of money the houses were bought for.
      */
     public int removeAllHouses() {
-        int curr = getHouses();
-        houses = 0;
+        return removeHouses(houses);
+    }
 
-        return getCostForNewHouses(curr);
+    public int revokeOwnership() {
+        isOwned = false;
+        isGroupOwned = false;
+        return removeAllHouses();
     }
 
     /**
