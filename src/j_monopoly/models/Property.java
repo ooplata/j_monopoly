@@ -97,6 +97,11 @@ public class Property {
         return removeHouses(houses);
     }
 
+    /**
+     * Fully revokes ownership of this property.
+     *
+     * @return AMount of money this property's houses were bought for.
+     */
     public int revokeOwnership() {
         isOwned = false;
         isGroupOwned = false;
