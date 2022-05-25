@@ -6,6 +6,15 @@ import j_monopoly.models.RollResult;
 
 public final class GameHelper {
     private static int currentPlayerIndex;
+    private static boolean canStartTurn = true;
+    private static boolean finished = false;
+
+    /**
+     * Whether the game should end.
+     */
+    public static boolean isGameFinished() {
+        return finished;
+    }
 
     /**
      * 0 based index of the current player.
@@ -29,6 +38,9 @@ public final class GameHelper {
         if (playerCount < 2 || playerCount > 12)
             throw new IndexOutOfBoundsException("Player count must be between 2 and 12 (inclusive).");
 
+        canStartTurn = true;
+        finished = false;
+
         Players.players.clear();
         currentPlayerIndex = -1;
         for (int i = 0; i < playerCount; i++) {
@@ -40,9 +52,12 @@ public final class GameHelper {
     }
 
     /**
-     * Starts the next turn, updates the current player info.
+     * Starts the next turn if possible, updates the current player info.
      */
     public static void startNewTurn() {
+        if (!canStartTurn) return;
+        canStartTurn = false;
+
         currentPlayerIndex += 1;
         if (currentPlayerIndex >= Players.playerCount()) {
             currentPlayerIndex = 0;
@@ -76,5 +91,16 @@ public final class GameHelper {
         Players.players.removeFirstOccurrence(curr);
         currentPlayerIndex -= 1;
         return curr.goBankrupt();
+    }
+
+    /**
+     * Finishes the current turn, allows a new one to be started.
+     *
+     * @return Whether there's players besides the current one left.
+     */
+    public static boolean finishTurn() {
+        finished = Players.players.size() < 2;
+        canStartTurn = !finished;
+        return finished;
     }
 }
