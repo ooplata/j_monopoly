@@ -52,6 +52,7 @@ public final class MainPage extends JFrame {
 
         // Bottom panel
         bottomPanel.setLayout(new GridLayout(2, 1, 0, 6));
+        bottomPanel.setBackground(new Color(0, 0, 0, 0));
 
         JButton continueBtn = new JButton("Continue");
         JButton exitBtn = new JButton("Exit");
