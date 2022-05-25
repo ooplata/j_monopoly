@@ -1,7 +1,9 @@
 package j_monopoly.game.views;
 
 import j_monopoly.assets.Resources;
+import j_monopoly.game.board.GameHelper;
 import j_monopoly.game.board.Spaces;
+import j_monopoly.game.dialogs.CurrentTurnDialog;
 import j_monopoly.models.Property;
 import j_monopoly.models.Space;
 
@@ -51,6 +53,11 @@ public final class MainPage extends JFrame {
 
         JButton nextBtn = new JButton("Next turn");
         JButton exitBtn = new JButton("Exit");
+
+        nextBtn.addActionListener(e -> {
+            GameHelper.startNewTurn();
+            CurrentTurnDialog.createDialog().setVisible(true);
+        });
         exitBtn.addActionListener(e -> dispose());
 
         bottomPanel.add(nextBtn);
