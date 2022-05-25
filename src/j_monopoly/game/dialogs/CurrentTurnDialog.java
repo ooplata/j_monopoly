@@ -1,7 +1,10 @@
 package j_monopoly.game.dialogs;
 
+import j_monopoly.enums.PropertyPurchaseResult;
 import j_monopoly.game.board.GameHelper;
+import j_monopoly.game.board.Players;
 import j_monopoly.models.Player;
+import j_monopoly.models.Property;
 import j_monopoly.models.RollResult;
 
 import javax.swing.*;
@@ -64,28 +67,64 @@ public class CurrentTurnDialog extends JDialog {
         switch (action) {
             case outOfJail -> {
                 player.tryExitJailWithCard();
+                showSimpleDialog("You used a get out of jail card!", "I too love bribing police officers!");
             }
             case giveUp -> {
                 GameHelper.bankrupt();
+                showSimpleDialog("You gave up!", "That's all. You can now leave.");
             }
             default -> {
                 if (player.isInJail()) {
                     boolean result = tryEscapeJail();
                     if (result) {
-                        SimpleMessageDialog.createDialog(player.name, "You got out of jail!", "yay!");
+                        showSimpleDialog("You got out of jail!", "yay!");
                     } else {
-                        SimpleMessageDialog.createDialog(player.name, "You're still in jail!", "yay..?");
+                        showSimpleDialog("You're still in jail!", "yay..?");
                     }
                 } else {
-                    RollResult result = roll();
+                    handleRoll(GameHelper.rollTwoDice());
                 }
             }
         }
     }
 
-    private RollResult<Object> roll() {
-        RollResult result = GameHelper.rollTwoDice();
-        return result;
+    private void handleRoll(RollResult<Object> result) {
+        if (result.passedGo) showSimpleDialog("You passed Go!",  "You get $200.");
+        switch (result.space.type) {
+            case GO -> showSimpleDialog("You landed on Go!", "Want a cookie? Well too bad we only have $200.");
+            case PROPERTY -> {
+                Property prop = (Property) result.space.data;
+                if (prop.isOwned) {
+                    Player owner = Players.getPropertyOwnerByTitle(prop.info.title);
+                    assert owner != null;
+
+                    // If we're the owner, do nothing.
+                    if (owner.name.equals(player.name)) {
+                        showSimpleDialog("You landed on " + prop.info.title + "!", "That's owned by you, so you can stay for free.");
+                        return;
+                    }
+
+                    if (player.tryPayRent(prop)) {
+                        owner.money += prop.getRent();
+                        showSimpleDialog("You landed on " + prop.info.title + "!", "That's owned by " + owner.name + ". You paid $" + prop.getRent() + " for rent.");
+                    } else {
+                        GameHelper.bankrupt();
+                        showSimpleDialog("You can't pay that rent!", "Now you're bankrupt. Do better next time.");
+                    }
+                } else {
+                    PropertyPurchaseResult res = player.purchaseProperty(prop);
+                    showSimpleDialog("You landed on " + prop.info.title + "!", "That's owned by no one. You paid $" + prop.info.cost + " to buy it :)");
+                }
+            }
+            case FREE_PASS -> showSimpleDialog("Free Parking!", "That's all. You can take a nap.");
+            case COMMUNITY_CHEST -> showSimpleDialog("Community Chest", "Not implemented :/");
+            case CHANCE -> showSimpleDialog("Chance", "Not implemented :/");
+            case JAIL -> showSimpleDialog("Say hi to the criminals!", "You're at the jail :) enjoy while it lasts!");
+            case GO_TO_JAIL -> {
+                player.goToJail();
+                showSimpleDialog("You got taken to jail!", "Time to delete the gym, hit your lawyer, and Facebook up.");
+            }
+        }
     }
 
     private boolean tryEscapeJail() {
@@ -101,6 +140,11 @@ public class CurrentTurnDialog extends JDialog {
         }
 
         return !player.isInJail();
+    }
+
+    private void showSimpleDialog(String header, String content) {
+        this.setVisible(false);
+        SimpleMessageDialog.createDialog(player.name, header, content).setVisible(true);
     }
 
     private void onCancel() {

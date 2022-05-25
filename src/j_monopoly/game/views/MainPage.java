@@ -2,8 +2,11 @@ package j_monopoly.game.views;
 
 import j_monopoly.assets.Resources;
 import j_monopoly.game.board.GameHelper;
+import j_monopoly.game.board.Players;
 import j_monopoly.game.board.Spaces;
 import j_monopoly.game.dialogs.CurrentTurnDialog;
+import j_monopoly.game.dialogs.NewGameDialog;
+import j_monopoly.game.dialogs.SimpleMessageDialog;
 import j_monopoly.models.Property;
 import j_monopoly.models.Space;
 
@@ -57,6 +60,13 @@ public final class MainPage extends JFrame {
         nextBtn.addActionListener(e -> {
             GameHelper.startNewTurn();
             CurrentTurnDialog.createDialog().setVisible(true);
+
+            if (GameHelper.isGameFinished()) {
+                this.setVisible(true);
+                SimpleMessageDialog.createDialog("Game's done!", "We have a winner!", "The winner is... " + Players.getPlayerAt(0).name + "!").setVisible(true);
+                NewGameDialog.createDialog().setVisible(true);
+                dispose();
+            }
         });
         exitBtn.addActionListener(e -> dispose());
 
