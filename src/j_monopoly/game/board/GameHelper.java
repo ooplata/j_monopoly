@@ -8,6 +8,13 @@ public final class GameHelper {
     private static int currentPlayerIndex;
 
     /**
+     * 0 based index of the current player.
+     */
+    public static int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
+    /**
      * Gets the player whose turn is active.
      */
     public static Player getCurrentPlayer() {
