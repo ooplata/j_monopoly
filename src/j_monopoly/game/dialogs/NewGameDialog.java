@@ -4,7 +4,6 @@ import j_monopoly.game.board.GameHelper;
 import j_monopoly.game.views.MainPage;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 
 public class NewGameDialog extends JDialog {
@@ -39,9 +38,7 @@ public class NewGameDialog extends JDialog {
 
     private void onOK() {
         GameHelper.startNewGame((Integer) playersComboBox.getSelectedItem());
-        JFrame frame = MainPage.createFrame();
-
-        frame.setSize(new Dimension(592, 704));
+        JFrame frame = new MainPage();
         frame.setResizable(false);
 
         this.setVisible(false);

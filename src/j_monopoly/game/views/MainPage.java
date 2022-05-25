@@ -11,44 +11,50 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public final class MainPage {
-    public static JFrame createFrame() {
-        JFrame frame = new JFrame("JMonopoly");
+public final class MainPage extends JFrame {
+    public MainPage() {
+        setTitle("JMonopoly");
 
         try {
             BufferedImage pic = ImageIO.read(Resources.getResource("Logo.png"));
-            frame.setIconImage(pic);
+            setIconImage(pic);
         } catch (IOException ignored) {
         }
 
-        frame.setContentPane(new MainPage().root);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-
-        return frame;
+        initialize();
+        setContentPane(root);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
     }
 
     private JPanel root;
     private JPanel topPanel;
-    private JPanel bottomPanel;
 
-    private void createUIComponents() {
-        // Top panel
+    private void initialize() {
+        // Constructors
+        root = new JPanel();
+        JPanel bottomPanel = new JPanel();
         topPanel = new JPanel();
+
+
+        // Root panel
+        root.add(topPanel);
+        root.add(bottomPanel);
+        root.setBackground(new Color(205, 230, 208));
+
+        // Top panel
         topPanel.setLayout(new GridLayout(9, 9, 0, 0));
         topPanel.setBackground(new Color(0, 0, 0, 0));
 
-        Dimension topDimen = new Dimension(576, 576);
-        topPanel.setMinimumSize(topDimen);
-        topPanel.setMaximumSize(topDimen);
-
         // Bottom panel
-        bottomPanel = new JPanel();
-        bottomPanel.setBackground(new Color(0, 0, 0, 16));
+        bottomPanel.setLayout(new GridLayout(2, 1, 0, 6));
 
-        Dimension bottomDimen = new Dimension(576, 128);
-        bottomPanel.setMinimumSize(bottomDimen);
-        bottomPanel.setMaximumSize(bottomDimen);
+        JButton nextBtn = new JButton("Next turn");
+        JButton exitBtn = new JButton("Exit");
+        exitBtn.addActionListener(e -> dispose());
+
+        bottomPanel.add(nextBtn);
+        bottomPanel.add(exitBtn);
 
         setupBoard();
     }
