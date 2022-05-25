@@ -75,6 +75,17 @@ public class Property {
     }
 
     /**
+     * Removes all houses/hotels from the property.
+     * @return The amount of money the houses were bought for.
+     */
+    public int removeAllHouses() {
+        int curr = getHouses();
+        houses = 0;
+
+        return getCostForNewHouses(curr);
+    }
+
+    /**
      * Gets the cost of adding the specified number of houses
      * to this property.
      *
