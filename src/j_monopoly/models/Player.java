@@ -12,6 +12,11 @@ public class Player {
     private boolean bankrupt;
 
     /**
+     * The player's name, usually "Player n".
+     */
+    public final String name;
+
+    /**
      * Whether the player is bankrupt.
      */
     public boolean isBankrupt() {
@@ -184,5 +189,9 @@ public class Player {
         groups.clear();
 
         return worth;
+    }
+
+    public Player(String name) {
+        this.name = name;
     }
 }

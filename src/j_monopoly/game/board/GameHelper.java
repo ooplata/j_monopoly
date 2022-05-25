@@ -44,7 +44,7 @@ public final class GameHelper {
         Players.players.clear();
         currentPlayerIndex = -1;
         for (int i = 0; i < playerCount; i++) {
-            Players.players.add(new Player());
+            Players.players.add(new Player("Player " + (i + 1)));
         }
 
         Spaces.spaces.clear();
