@@ -7,16 +7,34 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Player {
-    private final LinkedList<Property> properties = new LinkedList<>();
-    private final LinkedList<String> groups = new LinkedList<>();
     private boolean bankrupt;
     private boolean inJail;
     private int outOfJailCards = 0;
 
     /**
+     * Every property the player owns.
+     */
+    public final LinkedList<Property> properties = new LinkedList<>();
+
+    /**
+     * Every group the player owns.
+     */
+    public final LinkedList<String> groups = new LinkedList<>();
+
+    /**
      * The player's name, usually "Player n".
      */
     public final String name;
+
+    /**
+     * Amount of money the player has.
+     */
+    public int money = 1500;
+
+    /**
+     * 0 based index of the space the player's in.
+     */
+    public int space = 0;
 
     /**
      * Whether the player is bankrupt.
@@ -38,16 +56,6 @@ public class Player {
     public int getOutOfJailCards() {
         return outOfJailCards;
     }
-
-    /**
-     * Amount of money the player has.
-     */
-    public int money = 1500;
-
-    /**
-     * 0 based index of the space the player's in.
-     */
-    public int space = 0;
 
     /**
      * Moves forward the specified number of spaces.
