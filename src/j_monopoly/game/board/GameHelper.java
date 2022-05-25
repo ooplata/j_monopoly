@@ -1,6 +1,5 @@
 package j_monopoly.game.board;
 
-import j_monopoly.enums.SpaceType;
 import j_monopoly.models.Player;
 import j_monopoly.models.RollResult;
 import j_monopoly.models.Space;

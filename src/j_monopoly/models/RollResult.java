@@ -1,7 +1,5 @@
 package j_monopoly.models;
 
-import j_monopoly.enums.SpaceType;
-
 /**
  * Represents the information regarding the result of a die roll
  * and landing on a space.
@@ -32,11 +30,7 @@ public final class RollResult<T> {
      */
     public final boolean passedGo;
 
-    public RollResult(Space<T> space,
-                      int firstDie,
-                      int secondDie,
-                      int result,
-                      boolean passedGo) {
+    public RollResult(Space<T> space, int firstDie, int secondDie, int result, boolean passedGo) {
         this.space = space;
         this.firstDie = firstDie;
         this.secondDie = secondDie;
