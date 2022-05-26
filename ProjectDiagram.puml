@@ -113,4 +113,38 @@ class PropertyCard extends PurchasableCard {
     -rentWithHotel: int
 }
 
+class GameHelper {
+    #isGameFinished(): boolean
+
+    #getCurrentPlayerIndex(): int
+    #getCurrentPlayer(): Player
+
+    #startNewGame(int playerCount)
+    #startNewTurn()
+
+    #rollTwoDice(): RollResult<Object>
+
+    #bankrupt(): int
+
+    #finishTurn(): boolean
+}
+
+class Players {
+    -players: LinkedList<Player>
+
+    #playerCount(): int
+    #getPlayerAt(int index): Player
+
+    #getPropertyOwnerByTitle(String title): Player
+}
+
+class Spaces {
+    -spaces: LinkedList<Space<Object>>
+
+    #populateList()
+
+    #getSpaceTypeFromString(String str): SpaceType
+    #getPropertyCardFromString(String str): PropertyCard
+}
+
 @enduml
