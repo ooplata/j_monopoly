@@ -2,7 +2,7 @@
 A version of the board game Monopoly, made in Java. By Camilo Heras, Omar Plata Salas.
 
 ## Minimum requirements
-- [ ] Add class diagram
+- [x] Add class diagram
 - [x] Use linked lists for property data
 - [x] Add name, cost and rent to the property data
 - [x] Add player object with needed attributes
@@ -12,3 +12,6 @@ A version of the board game Monopoly, made in Java. By Camilo Heras, Omar Plata 
 - [ ] Implement community chest and chance cards
 - [x] Implement property selling
 - [x] Implement rent payments
+
+## Class diagram
+![Class diagram](ProjectDiagram.svg)
