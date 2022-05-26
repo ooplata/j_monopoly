@@ -99,7 +99,7 @@ public final class GameHelper {
      * @return Whether there's players besides the current one left.
      */
     public static boolean finishTurn() {
-        finished = Players.players.size() < 2;
+        finished = Players.playerCount() < 2;
         canStartTurn = !finished;
         return finished;
     }
