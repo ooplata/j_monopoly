@@ -15,8 +15,8 @@ public final class WildcardHelper {
     public static LinkedList<ActionCard> communityCards = new LinkedList<>();
 
     /**
-     * Populates the spaces list with data from the default
-     * spaces file.
+     * Populates the cards lists with data from the default
+     * cards files.
      */
     public static void populateList() {
         try (InputStream chanceStrm = Resources.getResourceAsStream("Chance.txt")) {
