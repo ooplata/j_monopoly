@@ -49,6 +49,11 @@ public final class GameHelper {
 
         Spaces.spaces.clear();
         Spaces.populateList();
+
+        WildcardHelper.communityCards.clear();
+        WildcardHelper.chanceCards.clear();
+
+        WildcardHelper.populateLists();
     }
 
     /**
