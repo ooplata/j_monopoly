@@ -1,0 +1,24 @@
+@startuml JMonopoly
+
+enum CardType {
+    -PROPERTY
+    -WILD
+}
+
+enum PropertyPurchaseResult {
+    -NOT_PURCHASED
+    -PURCHASED
+    -GROUP_PURCHASED
+}
+
+enum SpaceType {
+    -GO
+    -PROPERTY
+    -CHANCE
+    -COMMUNITY_CHEST
+    -FREE_PASS
+    -JAIL
+    -GO_TO_JAIL
+}
+
+@enduml
