@@ -18,7 +18,7 @@ public final class WildcardHelper {
      * Populates the cards lists with data from the default
      * cards files.
      */
-    public static void populateList() {
+    public static void populateLists() {
         try (InputStream chanceStrm = Resources.getResourceAsStream("Chance.txt")) {
             BufferedReader chanceReader = new BufferedReader(new InputStreamReader(chanceStrm));
             chanceReader.lines().forEach(WildcardHelper::addChanceCardToList);
