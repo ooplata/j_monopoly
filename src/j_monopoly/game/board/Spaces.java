@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
+import java.util.Random;
 
 public final class Spaces {
     public static LinkedList<Space<Object>> spaces = new LinkedList<>();
@@ -29,16 +30,17 @@ public final class Spaces {
                 BufferedReader propReader = new BufferedReader(new InputStreamReader(propStrm));
 
                 spaceReader.lines().forEach((s -> {
-                    if (s.isEmpty() || s.startsWith("#"))
-                        return;
+                    if (s.isEmpty() || s.startsWith("#")) return;
 
                     SpaceType type = getSpaceTypeFromString(s);
+
+                    // Adds custom data to each space. Property spaces get a property,
+                    // while chance and community chest get a seed to be used for RNG
                     switch (type) {
                         case PROPERTY -> {
                             try {
                                 String line = "#";
-                                while (line.isEmpty() || line.startsWith("#"))
-                                    line = propReader.readLine();
+                                while (line.isEmpty() || line.startsWith("#")) line = propReader.readLine();
 
                                 PropertyCard card = getPropertyCardFromString(line);
                                 Property prop = new Property(card);
@@ -46,6 +48,7 @@ public final class Spaces {
                             } catch (IOException ignored) {
                             }
                         }
+                        case CHANCE, COMMUNITY_CHEST -> spaces.add(new Space<>(new Random().nextInt(), type));
                         default -> spaces.add(new Space<>(0, type));
                     }
                 }));
