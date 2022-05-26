@@ -74,6 +74,27 @@ public class Property {
     }
 
     /**
+     * Gets the cost of adding the specified number of houses
+     * to this property.
+     *
+     * @param amount Amount of houses to add.
+     * @return The amount of money the user should pay for the
+     * houses. If the specified number of houses is invalid, this
+     * value will be 0.
+     */
+    public int getCostForNewHouses(int amount) {
+        if (amount < 1 || houses + amount > 5) return 0;
+
+        // If the player now has a hotel, calculate the price needed
+        // for one hotel, plus the amount of houses minus one
+        if (houses + amount == 5) {
+            amount--;
+            return (info.houseCost * amount) + info.hotelCost;
+        }
+        return info.houseCost * amount;
+    }
+
+    /**
      * Removes the specified number of houses from the property.
      *
      * @return The amount of money the houses were bought for.
@@ -106,26 +127,5 @@ public class Property {
         isOwned = false;
         isGroupOwned = false;
         return removeAllHouses();
-    }
-
-    /**
-     * Gets the cost of adding the specified number of houses
-     * to this property.
-     *
-     * @param amount Amount of houses to add.
-     * @return The amount of money the user should pay for the
-     * houses. If the specified number of houses is invalid, this
-     * value will be 0.
-     */
-    public int getCostForNewHouses(int amount) {
-        if (amount < 1 || houses + amount > 5) return 0;
-
-        // If the player now has a hotel, calculate the price needed
-        // for one hotel, plus the amount of houses minus one
-        if (houses + amount == 5) {
-            amount--;
-            return (info.houseCost * amount) + info.hotelCost;
-        }
-        return info.houseCost * amount;
     }
 }
