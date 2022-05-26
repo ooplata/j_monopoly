@@ -123,8 +123,14 @@ public class CurrentTurnDialog extends JDialog {
                 }
             }
             case FREE_PASS -> showSimpleDialog("Free Parking!", "That's all. You can take a nap.");
-            case COMMUNITY_CHEST -> showSimpleDialog("Community Chest", "Not implemented :/");
-            case CHANCE -> showSimpleDialog("Chance", "Not implemented :/");
+            case COMMUNITY_CHEST -> {
+                player.addOutOfJailCards(1);
+                showSimpleDialog("Community Chest", "You got a get out of jail for free card!");
+            }
+            case CHANCE -> {
+                player.addOutOfJailCards(1);
+                showSimpleDialog("Chance", "You got a get out of jail for free card!");
+            }
             case JAIL -> showSimpleDialog("Say hi to the criminals!", "You're at the jail :) enjoy while it lasts!");
             case GO_TO_JAIL -> {
                 player.goToJail();
