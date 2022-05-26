@@ -84,6 +84,7 @@ public class CurrentTurnDialog extends JDialog {
                         showSimpleDialog("You got out of jail!", "yay!");
                     } else {
                         showSimpleDialog("You're still in jail!", "yay..?");
+                        finishTurn();
                     }
                 } else {
                     handleRoll(GameHelper.rollTwoDice());
