@@ -147,4 +147,33 @@ class Spaces {
     #getPropertyCardFromString(String str): PropertyCard
 }
 
+object JDialog
+class AllPropertiesDialog extends JDialog {
+    #createDialog(Player player): AllPropertiesDialog
+}
+
+class BuildDialog extends JDialog {
+    #createDialog(Player player): BuildDialog
+}
+
+class CurrentTurnDialog extends JDialog {
+    #createDialog(): CurrentTurnDialog
+}
+
+class NewGameDialog extends JDialog {
+    #createDialog(): NewGameDialog
+}
+
+class PropertySpaceDialog extends JDialog {
+    #createDialog(Property property, Player player): PropertySpaceDialog
+}
+
+class RollResultDialog extends JDialog {
+    #createDialog(int first, int second, boolean isInJail): RollResultDialog
+}
+
+class SimpleMessageDialog extends JDialog {
+    #createDialog(String title, String header, String content): SimpleMessageDialog
+}
+
 @enduml
