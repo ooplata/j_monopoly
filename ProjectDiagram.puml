@@ -1,179 +1,200 @@
 @startuml JMonopoly
 
-enum CardType {
-    +PROPERTY
-    +WILD
+package enums {
+    enum CardType {
+        +PROPERTY
+        +WILD
+    }
+
+    enum PropertyPurchaseResult {
+        +NOT_PURCHASED
+        +PURCHASED
+        +GROUP_PURCHASED
+    }
+
+    enum SpaceType {
+        +GO
+        +PROPERTY
+        +CHANCE
+        +COMMUNITY_CHEST
+        +FREE_PASS
+        +JAIL
+        +GO_TO_JAIL
+    }
 }
 
-enum PropertyPurchaseResult {
-    +NOT_PURCHASED
-    +PURCHASED
-    +GROUP_PURCHASED
+package models {
+    class Player {
+        +properties: LinkedList<Property>
+        +groups: LinkedList<String>
+
+        +name: String
+        +money: int
+        +space: int
+
+        +isBankrupt(): boolean
+        +isInJail(): boolean
+        +getOutOfJailCards(): int
+
+        +moveForward(int spaces): boolean
+        +moveBack(int spaces): boolean
+        +rollSingleDie(): int
+
+        +getPropertyByTitle(String title): Property
+        +ownedPropertiesInGroup(String group): int
+        +isGroupOwned(String group): boolean
+
+        +purchaseProperty(Property property): PropertyPurchaseResult
+        +tryPayRent(Property property): boolean
+
+        +addOutOfJailCards(int amount)
+        +goToJail()
+        +exitJail()
+        +tryExitJailWithCard(): boolean
+
+        +goBankrupt(): int
+    }
+
+    class Property {
+        +info: PropertyCard
+        +isOwned: boolean
+        +isGroupOwned: boolean
+
+        +getRent(): int
+        +getHouses(): int
+
+        +addHouses(int amount): boolean
+        +getCostForNewHouses(int amount): int
+
+        +removeHouses(int amount): int
+        +removeAllHouses(): int
+
+        +revokeOwnership(): int
+    }
+
+    class RollResult<T> {
+        +space: Space<T>
+        +firstDie: int
+        +secondDie: int
+        +result: int
+        +passedGo: boolean
+    }
+
+    class Space<T> {
+        +data: T
+        +type: SpaceType
+    }
+
+    package cards {
+        class Card {
+            +cardType: CardType
+            +title: String
+            +description: String
+        }
+
+        class ActionCard extends Card {
+            +actionId: int
+        }
+
+        class PurchasableCard extends Card {
+            +cost: int
+            +purchased: boolean
+        }
+
+        class PropertyCard extends PurchasableCard {
+            +group: String
+            +amountInGroup: int
+
+            +rent: int
+            +rentWithGroup: int
+
+            +houseCost: int
+            +hotelCost: int
+
+            +rentWithHouse: int
+            +rentWithTwoHouses: int
+            +rentWithThreeHouses: int
+            +rentWithFourHouses: int
+            +rentWithHotel: int
+        }
+    }
 }
 
-enum SpaceType {
-    +GO
-    +PROPERTY
-    +CHANCE
-    +COMMUNITY_CHEST
-    +FREE_PASS
-    +JAIL
-    +GO_TO_JAIL
-}
+package game {
+    package board {
+        class GameHelper {
+            +isGameFinished(): boolean
 
-class Player {
-    +properties: LinkedList<Property>
-    +groups: LinkedList<String>
-    +name: String
-    +money: int
-    +space: int
+            +getCurrentPlayerIndex(): int
+            +getCurrentPlayer(): Player
 
-    +isBankrupt(): boolean
-    +isInJail(): boolean
-    +getOutOfJailCards(): int
+            +startNewGame(int playerCount)
+            +startNewTurn()
 
-    +moveForward(int spaces): boolean
-    +moveBack(int spaces): boolean
-    +rollSingleDie(): int
+            +rollTwoDice(): RollResult<Object>
 
-    +getPropertyByTitle(String title): Property
-    +ownedPropertiesInGroup(String group): int
-    +isGroupOwned(String group): boolean
+            +bankrupt(): int
 
-    +purchaseProperty(Property property): PropertyPurchaseResult
-    +tryPayRent(Property property): boolean
+            +finishTurn(): boolean
+        }
 
-    +addOutOfJailCards(int amount)
-    +goToJail()
-    +exitJail()
-    +tryExitJailWithCard(): boolean
+        class Players {
+            +players: LinkedList<Player>
 
-    +goBankrupt(): int
-}
+            +playerCount(): int
+            +getPlayerAt(int index): Player
 
-class Property {
-    +info: PropertyCard
-    +isOwned: boolean
-    +isGroupOwned: boolean
+            +getPropertyOwnerByTitle(String title): Player
+        }
 
-    +getRent(): int
-    +getHouses(): int
+        class Spaces {
+            +spaces: LinkedList<Space<Object>>
 
-    +addHouses(int amount): boolean
-    +getCostForNewHouses(int amount): int
+            +populateList()
 
-    +removeHouses(int amount): int
-    +removeAllHouses(): int
+            +getSpaceTypeFromString(String str): SpaceType
+            +getPropertyCardFromString(String str): PropertyCard
+        }
+    }
 
-    +revokeOwnership(): int
-}
+    package dialogs {
+        object JDialog
+        class AllPropertiesDialog extends JDialog {
+            +createDialog(Player player): AllPropertiesDialog
+        }
 
-class RollResult<T> {
-    +space: Space<T>
-    +firstDie: int
-    +secondDie: int
-    +result: int
-    +passedGo: boolean
-}
+        class BuildDialog extends JDialog {
+            +createDialog(Player player): BuildDialog
+        }
 
-class Space<T> {
-    +data: T
-    +type: SpaceType
-}
+        class CurrentTurnDialog extends JDialog {
+            +createDialog(): CurrentTurnDialog
+        }
 
-class Card {
-    +cardType: CardType
-    +title: String
-    +description: String
-}
+        class NewGameDialog extends JDialog {
+            +createDialog(): NewGameDialog
+        }
 
-class ActionCard extends Card {
-    +actionId: int
-}
+        class PropertySpaceDialog extends JDialog {
+            +createDialog(Property property, Player player): PropertySpaceDialog
+        }
 
-class PurchasableCard extends Card {
-    +cost: int
-    +purchased: boolean
-}
+        class RollResultDialog extends JDialog {
+            +createDialog(int first, int second, boolean isInJail): RollResultDialog
+        }
 
-class PropertyCard extends PurchasableCard {
-    +group: String
-    +amountInGroup: int
+        class SimpleMessageDialog extends JDialog {
+            +createDialog(String title, String header, String content): SimpleMessageDialog
+        }
+    }
 
-    +rent: int
-    +rentWithGroup: int
+    package views {
+        class MainPage { }
+    }
 
-    +houseCost: int
-    +hotelCost: int
-
-    +rentWithHouse: int
-    +rentWithTwoHouses: int
-    +rentWithThreeHouses: int
-    +rentWithFourHouses: int
-    +rentWithHotel: int
-}
-
-class GameHelper {
-    +isGameFinished(): boolean
-
-    +getCurrentPlayerIndex(): int
-    +getCurrentPlayer(): Player
-
-    +startNewGame(int playerCount)
-    +startNewTurn()
-
-    +rollTwoDice(): RollResult<Object>
-
-    +bankrupt(): int
-
-    +finishTurn(): boolean
-}
-
-class Players {
-    +players: LinkedList<Player>
-
-    +playerCount(): int
-    +getPlayerAt(int index): Player
-
-    +getPropertyOwnerByTitle(String title): Player
-}
-
-class Spaces {
-    +spaces: LinkedList<Space<Object>>
-
-    +populateList()
-
-    +getSpaceTypeFromString(String str): SpaceType
-    +getPropertyCardFromString(String str): PropertyCard
-}
-
-object JDialog
-class AllPropertiesDialog extends JDialog {
-    +createDialog(Player player): AllPropertiesDialog
-}
-
-class BuildDialog extends JDialog {
-    +createDialog(Player player): BuildDialog
-}
-
-class CurrentTurnDialog extends JDialog {
-    +createDialog(): CurrentTurnDialog
-}
-
-class NewGameDialog extends JDialog {
-    +createDialog(): NewGameDialog
-}
-
-class PropertySpaceDialog extends JDialog {
-    +createDialog(Property property, Player player): PropertySpaceDialog
-}
-
-class RollResultDialog extends JDialog {
-    +createDialog(int first, int second, boolean isInJail): RollResultDialog
-}
-
-class SimpleMessageDialog extends JDialog {
-    +createDialog(String title, String header, String content): SimpleMessageDialog
+    class EntryPoint {
+        +main(String[] args)
+    }
 }
 
 @enduml
