@@ -81,4 +81,36 @@ class Space<T> {
     -type: SpaceType
 }
 
+class Card {
+    -cardType: CardType
+    -title: String
+    -description: String
+}
+
+class ActionCard extends Card {
+    -actionId: int
+}
+
+class PurchasableCard extends Card {
+    -cost: int
+    -purchased: boolean
+}
+
+class PropertyCard extends PurchasableCard {
+    -group: String
+    -amountInGroup: int
+
+    -rent: int
+    -rentWithGroup: int
+
+    -houseCost: int
+    -hotelCost: int
+
+    -rentWithHouse: int
+    -rentWithTwoHouses: int
+    -rentWithThreeHouses: int
+    -rentWithFourHouses: int
+    -rentWithHotel: int
+}
+
 @enduml
