@@ -1,0 +1,18 @@
+# Action ID, Description
+
+0_Advance to Go (collect $200)
+1_Bank error in your favor. Collect $200
+2_Doctor’s fee. Pay $50
+3_From sale of stock you get $50
+4_Out
+5_Go to Jail. Go directly to jail, do not pass Go, do not collect $200
+6_Holiday fund matures. Receive $100
+7_Income tax refund. Collect $20
+8_It is your birthday. Collect $10 from every player
+9_Life insurance matures. Collect $100
+10_Pay hospital fees of $100
+11_Pay school fees of $50
+12_Receive $25 consultancy fee
+13_You are assessed for street repair. $40 per house. $115 per hotel
+14_You have won second prize in a beauty contest. Collect $10
+15_You inherit $100
