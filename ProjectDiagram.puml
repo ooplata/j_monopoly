@@ -1,179 +1,179 @@
 @startuml JMonopoly
 
 enum CardType {
-    -PROPERTY
-    -WILD
+    +PROPERTY
+    +WILD
 }
 
 enum PropertyPurchaseResult {
-    -NOT_PURCHASED
-    -PURCHASED
-    -GROUP_PURCHASED
+    +NOT_PURCHASED
+    +PURCHASED
+    +GROUP_PURCHASED
 }
 
 enum SpaceType {
-    -GO
-    -PROPERTY
-    -CHANCE
-    -COMMUNITY_CHEST
-    -FREE_PASS
-    -JAIL
-    -GO_TO_JAIL
+    +GO
+    +PROPERTY
+    +CHANCE
+    +COMMUNITY_CHEST
+    +FREE_PASS
+    +JAIL
+    +GO_TO_JAIL
 }
 
 class Player {
-    -properties: LinkedList<Property>
-    -groups: LinkedList<String>
-    -name: String
-    -money: int
-    -space: int
+    +properties: LinkedList<Property>
+    +groups: LinkedList<String>
+    +name: String
+    +money: int
+    +space: int
 
-    #isBankrupt(): boolean
-    #isInJail(): boolean
-    #getOutOfJailCards(): int
+    +isBankrupt(): boolean
+    +isInJail(): boolean
+    +getOutOfJailCards(): int
 
-    #moveForward(int spaces): boolean
-    #moveBack(int spaces): boolean
-    #rollSingleDie(): int
+    +moveForward(int spaces): boolean
+    +moveBack(int spaces): boolean
+    +rollSingleDie(): int
 
-    #getPropertyByTitle(String title): Property
-    #ownedPropertiesInGroup(String group): int
-    #isGroupOwned(String group): boolean
+    +getPropertyByTitle(String title): Property
+    +ownedPropertiesInGroup(String group): int
+    +isGroupOwned(String group): boolean
 
-    #purchaseProperty(Property property): PropertyPurchaseResult
-    #tryPayRent(Property property): boolean
+    +purchaseProperty(Property property): PropertyPurchaseResult
+    +tryPayRent(Property property): boolean
 
-    #addOutOfJailCards(int amount)
-    #goToJail()
-    #exitJail()
-    #tryExitJailWithCard(): boolean
+    +addOutOfJailCards(int amount)
+    +goToJail()
+    +exitJail()
+    +tryExitJailWithCard(): boolean
 
-    #goBankrupt(): int
+    +goBankrupt(): int
 }
 
 class Property {
-    -info: PropertyCard
-    -isOwned: boolean
-    -isGroupOwned: boolean
+    +info: PropertyCard
+    +isOwned: boolean
+    +isGroupOwned: boolean
 
-    #getRent(): int
-    #getHouses(): int
+    +getRent(): int
+    +getHouses(): int
 
-    #addHouses(int amount): boolean
-    #getCostForNewHouses(int amount): int
+    +addHouses(int amount): boolean
+    +getCostForNewHouses(int amount): int
 
-    #removeHouses(int amount): int
-    #removeAllHouses(): int
+    +removeHouses(int amount): int
+    +removeAllHouses(): int
 
-    #revokeOwnership(): int
+    +revokeOwnership(): int
 }
 
 class RollResult<T> {
-    -space: Space<T>
-    -firstDie: int
-    -secondDie: int
-    -result: int
-    -passedGo: boolean
+    +space: Space<T>
+    +firstDie: int
+    +secondDie: int
+    +result: int
+    +passedGo: boolean
 }
 
 class Space<T> {
-    -data: T
-    -type: SpaceType
+    +data: T
+    +type: SpaceType
 }
 
 class Card {
-    -cardType: CardType
-    -title: String
-    -description: String
+    +cardType: CardType
+    +title: String
+    +description: String
 }
 
 class ActionCard extends Card {
-    -actionId: int
+    +actionId: int
 }
 
 class PurchasableCard extends Card {
-    -cost: int
-    -purchased: boolean
+    +cost: int
+    +purchased: boolean
 }
 
 class PropertyCard extends PurchasableCard {
-    -group: String
-    -amountInGroup: int
+    +group: String
+    +amountInGroup: int
 
-    -rent: int
-    -rentWithGroup: int
+    +rent: int
+    +rentWithGroup: int
 
-    -houseCost: int
-    -hotelCost: int
+    +houseCost: int
+    +hotelCost: int
 
-    -rentWithHouse: int
-    -rentWithTwoHouses: int
-    -rentWithThreeHouses: int
-    -rentWithFourHouses: int
-    -rentWithHotel: int
+    +rentWithHouse: int
+    +rentWithTwoHouses: int
+    +rentWithThreeHouses: int
+    +rentWithFourHouses: int
+    +rentWithHotel: int
 }
 
 class GameHelper {
-    #isGameFinished(): boolean
+    +isGameFinished(): boolean
 
-    #getCurrentPlayerIndex(): int
-    #getCurrentPlayer(): Player
+    +getCurrentPlayerIndex(): int
+    +getCurrentPlayer(): Player
 
-    #startNewGame(int playerCount)
-    #startNewTurn()
+    +startNewGame(int playerCount)
+    +startNewTurn()
 
-    #rollTwoDice(): RollResult<Object>
+    +rollTwoDice(): RollResult<Object>
 
-    #bankrupt(): int
+    +bankrupt(): int
 
-    #finishTurn(): boolean
+    +finishTurn(): boolean
 }
 
 class Players {
-    -players: LinkedList<Player>
+    +players: LinkedList<Player>
 
-    #playerCount(): int
-    #getPlayerAt(int index): Player
+    +playerCount(): int
+    +getPlayerAt(int index): Player
 
-    #getPropertyOwnerByTitle(String title): Player
+    +getPropertyOwnerByTitle(String title): Player
 }
 
 class Spaces {
-    -spaces: LinkedList<Space<Object>>
+    +spaces: LinkedList<Space<Object>>
 
-    #populateList()
+    +populateList()
 
-    #getSpaceTypeFromString(String str): SpaceType
-    #getPropertyCardFromString(String str): PropertyCard
+    +getSpaceTypeFromString(String str): SpaceType
+    +getPropertyCardFromString(String str): PropertyCard
 }
 
 object JDialog
 class AllPropertiesDialog extends JDialog {
-    #createDialog(Player player): AllPropertiesDialog
+    +createDialog(Player player): AllPropertiesDialog
 }
 
 class BuildDialog extends JDialog {
-    #createDialog(Player player): BuildDialog
+    +createDialog(Player player): BuildDialog
 }
 
 class CurrentTurnDialog extends JDialog {
-    #createDialog(): CurrentTurnDialog
+    +createDialog(): CurrentTurnDialog
 }
 
 class NewGameDialog extends JDialog {
-    #createDialog(): NewGameDialog
+    +createDialog(): NewGameDialog
 }
 
 class PropertySpaceDialog extends JDialog {
-    #createDialog(Property property, Player player): PropertySpaceDialog
+    +createDialog(Property property, Player player): PropertySpaceDialog
 }
 
 class RollResultDialog extends JDialog {
-    #createDialog(int first, int second, boolean isInJail): RollResultDialog
+    +createDialog(int first, int second, boolean isInJail): RollResultDialog
 }
 
 class SimpleMessageDialog extends JDialog {
-    #createDialog(String title, String header, String content): SimpleMessageDialog
+    +createDialog(String title, String header, String content): SimpleMessageDialog
 }
 
 @enduml
