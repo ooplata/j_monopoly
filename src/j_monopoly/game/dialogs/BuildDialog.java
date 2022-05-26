@@ -7,11 +7,65 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Objects;
 
-public class BuildDialog extends JDialog {
+public final class BuildDialog extends JDialog {
     private boolean canBuild = false;
     private final Player player;
 
-    public BuildDialog(Player player) {
+    public static BuildDialog createDialog(Player player) {
+        BuildDialog dialog = new BuildDialog(player);
+        dialog.pack();
+        return dialog;
+    }
+
+    private void refillNumberBox(Property property) {
+        numberBox.removeAllItems();
+
+        int maxHouses = 1;
+        int houseCost = property.getCostForNewHouses(maxHouses);
+
+        while (houseCost > 0) {
+            numberBox.addItem(maxHouses);
+            maxHouses++;
+            houseCost = property.getCostForNewHouses(maxHouses);
+        }
+    }
+
+    private void showSimpleDialog(String header, String content) {
+        this.setVisible(false);
+        SimpleMessageDialog.createDialog(player.name, header, content).setVisible(true);
+    }
+
+    private void onOK() {
+        if (canBuild) {
+            Property prop = (Property) propertyBox.getSelectedItem();
+            int amount = (Integer) Objects.requireNonNull(numberBox.getSelectedItem());
+
+            assert prop != null;
+            int cost = prop.getCostForNewHouses(amount);
+            if (cost > player.money) {
+                showSimpleDialog("You can't get that!", "You have $" + player.money + ", but your house(s) cost $" + cost + ". Sorry.");
+            } else {
+                boolean result = prop.addHouses(amount);
+                if (result) {
+                    player.money -= cost;
+                    int houses = prop.getHouses();
+
+                    String content = "You now have $" + player.money + ". Your house(s) cost $" + cost + ", and the property now has ";
+                    if (houses == 5) content += "a hotel.";
+                    else content += houses + " houses.";
+
+                    showSimpleDialog("Purchased!", content);
+                }
+            }
+        }
+        dispose();
+    }
+
+    private void onCancel() {
+        dispose();
+    }
+
+    private BuildDialog(Player player) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -55,60 +109,6 @@ public class BuildDialog extends JDialog {
             assert player.properties.peekLast() != null;
             refillNumberBox(player.properties.peekLast());
         }
-    }
-
-    private void refillNumberBox(Property property) {
-        numberBox.removeAllItems();
-
-        int maxHouses = 1;
-        int houseCost = property.getCostForNewHouses(maxHouses);
-
-        while (houseCost > 0) {
-            numberBox.addItem(maxHouses);
-            maxHouses++;
-            houseCost = property.getCostForNewHouses(maxHouses);
-        }
-    }
-
-    private void onOK() {
-        if (canBuild) {
-            Property prop = (Property) propertyBox.getSelectedItem();
-            int amount = (Integer) Objects.requireNonNull(numberBox.getSelectedItem());
-
-            assert prop != null;
-            int cost = prop.getCostForNewHouses(amount);
-            if (cost > player.money) {
-                showSimpleDialog("You can't get that!", "You have $" + player.money + ", but your house(s) cost $" + cost + ". Sorry.");
-            } else {
-                boolean result = prop.addHouses(amount);
-                if (result) {
-                    player.money -= cost;
-                    int houses = prop.getHouses();
-
-                    String content = "You now have $" + player.money + ". Your house(s) cost $" + cost + ", and the property now has ";
-                    if (houses == 5) content += "a hotel.";
-                    else content += houses + " houses.";
-
-                    showSimpleDialog("Purchased!", content);
-                }
-            }
-        }
-        dispose();
-    }
-
-    private void onCancel() {
-        dispose();
-    }
-
-    private void showSimpleDialog(String header, String content) {
-        this.setVisible(false);
-        SimpleMessageDialog.createDialog(player.name, header, content).setVisible(true);
-    }
-
-    public static BuildDialog createDialog(Player player) {
-        BuildDialog dialog = new BuildDialog(player);
-        dialog.pack();
-        return dialog;
     }
 
     private JPanel contentPane;

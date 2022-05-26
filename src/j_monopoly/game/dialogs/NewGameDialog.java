@@ -8,14 +8,35 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Objects;
 
-public class NewGameDialog extends JDialog {
+public final class NewGameDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JLabel newGameLabel;
     private JComboBox<Integer> playersComboBox;
 
-    public NewGameDialog() {
+    public static NewGameDialog createDialog() {
+        NewGameDialog dialog = new NewGameDialog();
+        dialog.pack();
+        return dialog;
+    }
+
+    private void onOK() {
+        GameHelper.startNewGame((Integer) Objects.requireNonNull(playersComboBox.getSelectedItem()));
+        JFrame frame = new MainPage();
+        frame.setResizable(false);
+
+        this.setVisible(false);
+        frame.setVisible(true);
+
+        dispose();
+    }
+
+    private void onCancel() {
+        dispose();
+    }
+
+    private NewGameDialog() {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -35,27 +56,5 @@ public class NewGameDialog extends JDialog {
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
-
-    private void onOK() {
-        GameHelper.startNewGame((Integer) Objects.requireNonNull(playersComboBox.getSelectedItem()));
-        JFrame frame = new MainPage();
-        frame.setResizable(false);
-
-        this.setVisible(false);
-        frame.setVisible(true);
-
-        dispose();
-    }
-
-    private void onCancel() {
-        dispose();
-    }
-
-    public static NewGameDialog createDialog() {
-        NewGameDialog dialog = new NewGameDialog();
-        dialog.pack();
-
-        return dialog;
     }
 }

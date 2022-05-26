@@ -4,18 +4,24 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public final class SimpleMessageDialog extends JDialog {
-    private SimpleMessageDialog() {
+    public static SimpleMessageDialog createDialog(String title, String header, String content) {
+        SimpleMessageDialog dialog = new SimpleMessageDialog(title, header, content);
+        dialog.pack();
+        return dialog;
+    }
+
+    private void onOK() {
+        dispose();
+    }
+
+    private SimpleMessageDialog(String title, String header, String content) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
 
-        // call onOk() when cross is clicked
+        // call onOK() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
@@ -23,23 +29,12 @@ public final class SimpleMessageDialog extends JDialog {
             }
         });
 
-        // call onOk() on ESCAPE
+        // call onOK() on ESCAPE
         contentPane.registerKeyboardAction(e -> onOK(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
 
-    private void onOK() {
-        dispose();
-    }
-
-    public static SimpleMessageDialog createDialog(String title, String header, String content) {
-        SimpleMessageDialog dialog = new SimpleMessageDialog();
-
-        dialog.setTitle(title);
-        dialog.header.setText(header);
-        dialog.content.setText(content);
-
-        dialog.pack();
-        return dialog;
+        this.setTitle(title);
+        this.header.setText(header);
+        this.content.setText(content);
     }
 
     private JPanel contentPane;

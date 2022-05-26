@@ -9,28 +9,11 @@ import j_monopoly.models.Property;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class PropertySpaceDialog extends JDialog {
-    public PropertySpaceDialog(Property property, Player player) {
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-
-        buttonOK.addActionListener(e -> onOK(property, player));
-        buttonCancel.addActionListener(e -> onCancel());
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-        propName.setText(property.info.title);
-        propInfo.setText("It costs $" + property.info.cost + " and belongs to group " + property.info.group + ". Would you like to buy it?");
+public final class PropertySpaceDialog extends JDialog {
+    public static PropertySpaceDialog createDialog(Property property, Player player) {
+        PropertySpaceDialog dialog = new PropertySpaceDialog(property, player);
+        dialog.pack();
+        return dialog;
     }
 
     private void onOK(Property property, Player player) {
@@ -58,11 +41,27 @@ public class PropertySpaceDialog extends JDialog {
         dispose();
     }
 
-    public static PropertySpaceDialog createDialog(Property property, Player player) {
-        PropertySpaceDialog dialog = new PropertySpaceDialog(property, player);
-        dialog.pack();
+    private PropertySpaceDialog(Property property, Player player) {
+        setContentPane(contentPane);
+        setModal(true);
+        getRootPane().setDefaultButton(buttonOK);
 
-        return dialog;
+        buttonOK.addActionListener(e -> onOK(property, player));
+        buttonCancel.addActionListener(e -> onCancel());
+
+        // call onCancel() when cross is clicked
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
+
+        // call onCancel() on ESCAPE
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        propName.setText(property.info.title);
+        propInfo.setText("It costs $" + property.info.cost + " and belongs to group " + property.info.group + ". Would you like to buy it?");
     }
 
     private JPanel contentPane;

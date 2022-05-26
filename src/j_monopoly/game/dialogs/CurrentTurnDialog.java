@@ -12,7 +12,7 @@ import java.awt.event.*;
 import java.util.Objects;
 import java.util.Random;
 
-public class CurrentTurnDialog extends JDialog {
+public final class CurrentTurnDialog extends JDialog {
     private final Player player;
     private boolean hideWhenDone = false;
 
@@ -21,47 +21,10 @@ public class CurrentTurnDialog extends JDialog {
     private final String giveUp = "Give up";
     private final String outOfJail = "Use out of jail card";
 
-    public CurrentTurnDialog() {
-        setContentPane(contentPane);
-        setModal(true);
-        getRootPane().setDefaultButton(buttonOK);
-
-        buttonOK.addActionListener(e -> onOK());
-
-        buttonCancel.addActionListener(e -> onCancel());
-
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
-            }
-        });
-
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
-        player = GameHelper.getCurrentPlayer();
-
-        playerTurn.setText("Your turn, " + player.name + "!");
-        money.setText("You have $" + player.money);
-
-        optionBox.addItem("Roll");
-        if (!player.isInJail()) {
-            optionBox.addItem(checkProps);
-            optionBox.addItem(build);
-            optionBox.addItem(giveUp);
-        } else {
-            if (player.getOutOfJailCards() > 0) {
-                optionBox.addItem(outOfJail);
-            }
-        }
-    }
-
-    private void onOK() {
-        handleTurn((String) Objects.requireNonNull(optionBox.getSelectedItem()));
-        if (hideWhenDone) dispose();
-        else setVisible(true);
+    public static CurrentTurnDialog createDialog() {
+        CurrentTurnDialog dialog = new CurrentTurnDialog();
+        dialog.pack();
+        return dialog;
     }
 
     private void handleTurn(String action) {
@@ -176,14 +139,51 @@ public class CurrentTurnDialog extends JDialog {
         hideWhenDone = true;
     }
 
+    private void onOK() {
+        handleTurn((String) Objects.requireNonNull(optionBox.getSelectedItem()));
+        if (hideWhenDone) dispose();
+        else setVisible(true);
+    }
+
     private void onCancel() {
         dispose();
     }
 
-    public static CurrentTurnDialog createDialog() {
-        CurrentTurnDialog dialog = new CurrentTurnDialog();
-        dialog.pack();
-        return dialog;
+    private CurrentTurnDialog() {
+        setContentPane(contentPane);
+        setModal(true);
+        getRootPane().setDefaultButton(buttonOK);
+
+        buttonOK.addActionListener(e -> onOK());
+
+        buttonCancel.addActionListener(e -> onCancel());
+
+        // call onCancel() when cross is clicked
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                onCancel();
+            }
+        });
+
+        // call onCancel() on ESCAPE
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        player = GameHelper.getCurrentPlayer();
+
+        playerTurn.setText("Your turn, " + player.name + "!");
+        money.setText("You have $" + player.money);
+
+        optionBox.addItem("Roll");
+        if (!player.isInJail()) {
+            optionBox.addItem(checkProps);
+            optionBox.addItem(build);
+            optionBox.addItem(giveUp);
+        } else {
+            if (player.getOutOfJailCards() > 0) {
+                optionBox.addItem(outOfJail);
+            }
+        }
     }
 
     private JPanel contentPane;

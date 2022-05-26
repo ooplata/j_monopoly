@@ -6,17 +6,23 @@ import j_monopoly.models.Property;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class AllPropertiesDialog extends JDialog {
-    public AllPropertiesDialog() {
+public final class AllPropertiesDialog extends JDialog {
+    public static AllPropertiesDialog createDialog(Player player) {
+        AllPropertiesDialog dialog = new AllPropertiesDialog(player);
+        dialog.pack();
+        return dialog;
+    }
+
+    private void onOK() {
+        dispose();
+    }
+
+    private AllPropertiesDialog(Player player) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
 
         // call onOK() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -28,23 +34,12 @@ public class AllPropertiesDialog extends JDialog {
 
         // call onOK() on ESCAPE
         contentPane.registerKeyboardAction(e -> onOK(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
 
-    private void onOK() {
-        dispose();
-    }
-
-    public static AllPropertiesDialog createDialog(Player player) {
-        AllPropertiesDialog dialog = new AllPropertiesDialog();
-
-        dialog.setTitle(player.name);
-        dialog.header.setText("All properties owned by " + player.name);
+        setTitle(player.name);
+        header.setText("All properties owned by " + player.name);
 
         for (Property prop : player.properties)
-            dialog.properties.append(prop.info.title + ": " + prop.info.group + "\n");
-
-        dialog.pack();
-        return dialog;
+            properties.append(prop.info.title + ": " + prop.info.group + "\n");
     }
 
     private JPanel contentPane;

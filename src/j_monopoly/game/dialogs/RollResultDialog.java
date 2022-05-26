@@ -9,8 +9,18 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class RollResultDialog extends JDialog {
-    public RollResultDialog(int first, int second, boolean isInJail) {
+public final class RollResultDialog extends JDialog {
+    public static RollResultDialog createDialog(int first, int second, boolean isInJail) {
+        RollResultDialog dialog = new RollResultDialog(first, second, isInJail);
+        dialog.pack();
+        return dialog;
+    }
+
+    private void onOK() {
+        dispose();
+    }
+
+    private RollResultDialog(int first, int second, boolean isInJail) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -49,17 +59,6 @@ public class RollResultDialog extends JDialog {
             this.second.setIcon(new ImageIcon(secondPic));
         } catch (IOException ignored) {
         }
-    }
-
-    private void onOK() {
-        dispose();
-    }
-
-    public static RollResultDialog createDialog(int first, int second, boolean isInJail) {
-        RollResultDialog dialog = new RollResultDialog(first, second, isInJail);
-        dialog.pack();
-
-        return dialog;
     }
 
     private JPanel contentPane;
