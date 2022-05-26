@@ -21,4 +21,64 @@ enum SpaceType {
     -GO_TO_JAIL
 }
 
+class Player {
+    -properties: LinkedList<Property>
+    -groups: LinkedList<String>
+    -name: String
+    -money: int
+    -space: int
+
+    #isBankrupt(): boolean
+    #isInJail(): boolean
+    #getOutOfJailCards(): int
+
+    #moveForward(int spaces): boolean
+    #moveBack(int spaces): boolean
+    #rollSingleDie(): int
+
+    #getPropertyByTitle(String title): Property
+    #ownedPropertiesInGroup(String group): int
+    #isGroupOwned(String group): boolean
+
+    #purchaseProperty(Property property): PropertyPurchaseResult
+    #tryPayRent(Property property): boolean
+
+    #addOutOfJailCards(int amount)
+    #goToJail()
+    #exitJail()
+    #tryExitJailWithCard(): boolean
+
+    #goBankrupt(): int
+}
+
+class Property {
+    -info: PropertyCard
+    -isOwned: boolean
+    -isGroupOwned: boolean
+
+    #getRent(): int
+    #getHouses(): int
+
+    #addHouses(int amount): boolean
+    #getCostForNewHouses(int amount): int
+
+    #removeHouses(int amount): int
+    #removeAllHouses(): int
+
+    #revokeOwnership(): int
+}
+
+class RollResult<T> {
+    -space: Space<T>
+    -firstDie: int
+    -secondDie: int
+    -result: int
+    -passedGo: boolean
+}
+
+class Space<T> {
+    -data: T
+    -type: SpaceType
+}
+
 @enduml
