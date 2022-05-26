@@ -10,6 +10,7 @@ import j_monopoly.models.RollResult;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.Objects;
+import java.util.Random;
 
 public class CurrentTurnDialog extends JDialog {
     private final Player player;
@@ -124,14 +125,8 @@ public class CurrentTurnDialog extends JDialog {
                 }
             }
             case FREE_PASS -> showSimpleDialog("Free Parking!", "That's all. You can take a nap.");
-            case COMMUNITY_CHEST -> {
-                player.addOutOfJailCards(1);
-                showSimpleDialog("Community Chest", "You got a get out of jail for free card!");
-            }
-            case CHANCE -> {
-                player.addOutOfJailCards(1);
-                showSimpleDialog("Chance", "You got a get out of jail for free card!");
-            }
+            case COMMUNITY_CHEST -> handleWildSpace("Community Chest");
+            case CHANCE -> handleWildSpace("Chance");
             case JAIL -> showSimpleDialog("Say hi to the criminals!", "You're at the jail :) enjoy while it lasts!");
             case GO_TO_JAIL -> {
                 player.goToJail();
@@ -141,6 +136,17 @@ public class CurrentTurnDialog extends JDialog {
 
         // Only finish turns if player doesn't get doubles
         if (result.firstDie != result.secondDie) finishTurn();
+    }
+
+    private void handleWildSpace(String header) {
+        Random r = new Random();
+        if (r.nextInt(1, 6) != 4) {
+            player.addOutOfJailCards(1);
+            showSimpleDialog(header, "You got a get out of jail for free card!");
+        } else {
+            player.goToJail();
+            showSimpleDialog(header, "Go to jail, right away! Unlucky day for you. :(");
+        }
     }
 
     private boolean tryEscapeJail() {
