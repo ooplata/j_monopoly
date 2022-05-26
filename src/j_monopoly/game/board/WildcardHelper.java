@@ -2,11 +2,7 @@ package j_monopoly.game.board;
 
 import j_monopoly.assets.Resources;
 import j_monopoly.enums.CardType;
-import j_monopoly.enums.SpaceType;
-import j_monopoly.models.Property;
-import j_monopoly.models.Space;
 import j_monopoly.models.cards.ActionCard;
-import j_monopoly.models.cards.PropertyCard;
 
 import java.io.BufferedReader;
 import java.io.IOException;
