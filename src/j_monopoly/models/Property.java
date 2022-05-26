@@ -9,15 +9,10 @@ public class Property {
     public final PropertyCard info;
 
     /**
-     * Whether this property is owned by any player. Defaults to false.
-     */
-    public Boolean isOwned = false;
-
-    /**
      * Whether this property's group is fully owned by any player.
      * Defaults to false.
      */
-    public Boolean isGroupOwned = false;
+    public Boolean isGroupPurchased = false;
 
     /**
      * Amount of houses in this property. If the value is 5, it means the
@@ -45,7 +40,7 @@ public class Property {
             case 5:
                 return info.rentWithHotel;
             default:
-                if (isGroupOwned) {
+                if (isGroupPurchased) {
                     return info.rentWithGroup;
                 }
                 return info.rent;
@@ -124,8 +119,8 @@ public class Property {
      * @return AMount of money this property's houses were bought for.
      */
     public int revokeOwnership() {
-        isOwned = false;
-        isGroupOwned = false;
+        info.purchased = false;
+        isGroupPurchased = false;
         return removeAllHouses();
     }
 }

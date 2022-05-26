@@ -8,6 +8,11 @@ public class PurchasableCard extends Card {
      */
     public final int cost;
 
+    /**
+     * Whether this item has been purchased. Defaults to false.
+     */
+    public Boolean purchased = false;
+
     public PurchasableCard(CardType cardType,
                            String title,
                            String description,

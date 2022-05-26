@@ -32,7 +32,7 @@ public class BuildDialog extends JDialog {
 
         this.player = player;
         for (Property property : player.properties) {
-            if (property.isGroupOwned && property.getCostForNewHouses(1) > 0) {
+            if (property.isGroupPurchased && property.getCostForNewHouses(1) > 0) {
                 propertyBox.addItem(property);
                 canBuild = true;
             }

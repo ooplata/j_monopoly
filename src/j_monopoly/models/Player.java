@@ -147,7 +147,7 @@ public class Player {
 
         money -= property.info.cost;
 
-        property.isOwned = true;
+        property.info.purchased = true;
         properties.add(property);
 
         // If the full group is now owned, update the other properties
@@ -156,7 +156,7 @@ public class Player {
             groups.add(group);
             for (Property prop : properties) {
                 if (Objects.equals(prop.info.group, group)) {
-                    prop.isGroupOwned = true;
+                    prop.isGroupPurchased = true;
                 }
             }
             return PropertyPurchaseResult.GROUP_PURCHASED;

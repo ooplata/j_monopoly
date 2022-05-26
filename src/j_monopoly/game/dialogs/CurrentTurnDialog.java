@@ -102,7 +102,7 @@ public class CurrentTurnDialog extends JDialog {
             case GO -> showSimpleDialog("You landed on Go!", "Want a cookie? Well too bad we only have $200.");
             case PROPERTY -> {
                 Property prop = (Property) result.space.data;
-                if (prop.isOwned) {
+                if (prop.info.purchased) {
                     Player owner = Players.getPropertyOwnerByTitle(prop.info.title);
                     assert owner != null;
 
