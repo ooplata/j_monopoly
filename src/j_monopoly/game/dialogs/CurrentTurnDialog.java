@@ -1,5 +1,6 @@
 package j_monopoly.game.dialogs;
 
+import j_monopoly.assets.Resources;
 import j_monopoly.game.board.GameHelper;
 import j_monopoly.game.board.Players;
 import j_monopoly.game.board.WildcardHelper;
@@ -197,6 +198,9 @@ public final class CurrentTurnDialog extends JDialog {
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         player = GameHelper.getCurrentPlayer();
+
+        setTitle(player.name);
+        setIconImage(Resources.getAppIcon());
 
         playerTurn.setText("Your turn, " + player.name + "!");
         money.setText("You have $" + player.money);

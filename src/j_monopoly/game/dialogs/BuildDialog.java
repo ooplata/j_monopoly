@@ -1,5 +1,6 @@
 package j_monopoly.game.dialogs;
 
+import j_monopoly.assets.Resources;
 import j_monopoly.models.Player;
 import j_monopoly.models.Property;
 
@@ -85,6 +86,10 @@ public final class BuildDialog extends JDialog {
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         this.player = player;
+
+        setTitle(player.name);
+        setIconImage(Resources.getAppIcon());
+
         for (Property property : player.properties) {
             if (property.isGroupPurchased && property.getCostForNewHouses(1) > 0) {
                 propertyBox.addItem(property);

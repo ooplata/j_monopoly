@@ -1,7 +1,7 @@
 package j_monopoly.game.dialogs.spaces;
 
+import j_monopoly.assets.Resources;
 import j_monopoly.enums.PropertyPurchaseResult;
-import j_monopoly.game.board.GameHelper;
 import j_monopoly.game.dialogs.SimpleMessageDialog;
 import j_monopoly.models.Player;
 import j_monopoly.models.Property;
@@ -59,6 +59,9 @@ public final class PropertySpaceDialog extends JDialog {
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        setTitle(property.info.description);
+        setIconImage(Resources.getAppIcon());
 
         propName.setText(property.info.title);
         propInfo.setText("It costs $" + property.info.cost + " and belongs to group " + property.info.group + ". Would you like to buy it?");

@@ -1,5 +1,7 @@
 package j_monopoly.game.dialogs;
 
+import j_monopoly.assets.Resources;
+
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -33,6 +35,8 @@ public final class SimpleMessageDialog extends JDialog {
         contentPane.registerKeyboardAction(e -> onOK(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         this.setTitle(title);
+        this.setIconImage(Resources.getAppIcon());
+
         this.header.setText(header);
         this.content.setText(content);
     }

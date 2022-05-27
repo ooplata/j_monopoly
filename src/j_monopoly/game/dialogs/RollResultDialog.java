@@ -1,7 +1,6 @@
 package j_monopoly.game.dialogs;
 
 import j_monopoly.assets.Resources;
-import j_monopoly.models.RollResult;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -37,6 +36,9 @@ public final class RollResultDialog extends JDialog {
 
         // call onOK() on ESCAPE
         contentPane.registerKeyboardAction(e -> onOK(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        setTitle("Rolled");
+        setIconImage(Resources.getAppIcon());
 
         this.result.setText("You rolled " + (first + second) + "!");
         if (first == second) {

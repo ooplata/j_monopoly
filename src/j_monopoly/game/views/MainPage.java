@@ -19,12 +19,7 @@ import java.io.IOException;
 public final class MainPage extends JFrame {
     public MainPage() {
         setTitle("JMonopoly");
-
-        try {
-            BufferedImage pic = ImageIO.read(Resources.getResource("Logo.png"));
-            setIconImage(pic);
-        } catch (IOException ignored) {
-        }
+        setIconImage(Resources.getAppIcon());
 
         initialize();
         setContentPane(root);

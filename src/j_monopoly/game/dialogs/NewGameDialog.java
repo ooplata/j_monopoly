@@ -1,7 +1,7 @@
 package j_monopoly.game.dialogs;
 
+import j_monopoly.assets.Resources;
 import j_monopoly.game.board.GameHelper;
-import j_monopoly.game.board.Players;
 import j_monopoly.game.views.MainPage;
 
 import javax.swing.*;
@@ -9,10 +9,6 @@ import java.awt.event.*;
 import java.util.Objects;
 
 public final class NewGameDialog extends JDialog {
-    private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
-    private JLabel newGameLabel;
     private JComboBox<Integer> playersComboBox;
 
     public static NewGameDialog createDialog() {
@@ -56,5 +52,13 @@ public final class NewGameDialog extends JDialog {
 
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        setTitle("New game");
+        setIconImage(Resources.getAppIcon());
     }
+
+    private JPanel contentPane;
+    private JButton buttonOK;
+    private JButton buttonCancel;
+    private JLabel newGameLabel;
 }

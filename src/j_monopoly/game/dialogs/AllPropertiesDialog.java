@@ -1,5 +1,6 @@
 package j_monopoly.game.dialogs;
 
+import j_monopoly.assets.Resources;
 import j_monopoly.models.Player;
 import j_monopoly.models.Property;
 
@@ -36,6 +37,8 @@ public final class AllPropertiesDialog extends JDialog {
         contentPane.registerKeyboardAction(e -> onOK(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         setTitle(player.name);
+        setIconImage(Resources.getAppIcon());
+
         header.setText("All properties owned by " + player.name);
 
         for (Property prop : player.properties)
