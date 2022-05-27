@@ -2,10 +2,12 @@ package j_monopoly.game.dialogs;
 
 import j_monopoly.game.board.GameHelper;
 import j_monopoly.game.board.Players;
+import j_monopoly.game.board.WildcardHelper;
 import j_monopoly.game.dialogs.spaces.PropertySpaceDialog;
 import j_monopoly.models.Player;
 import j_monopoly.models.Property;
 import j_monopoly.models.RollResult;
+import j_monopoly.models.cards.ActionCard;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -88,8 +90,20 @@ public final class CurrentTurnDialog extends JDialog {
                 }
             }
             case FREE_PASS -> showSimpleDialog("Free Parking!", "That's all. You can take a nap.");
-            case COMMUNITY_CHEST -> handleWildSpace("Community Chest");
-            case CHANCE -> handleWildSpace("Chance");
+            case COMMUNITY_CHEST -> {
+                boolean bankrupt = handleWildSpace(false, (int) result.space.data);
+                if (bankrupt) {
+                    finishTurn();
+                    return;
+                }
+            }
+            case CHANCE -> {
+                boolean bankrupt = handleWildSpace(true, (int) result.space.data);
+                if (bankrupt) {
+                    finishTurn();
+                    return;
+                }
+            }
             case JAIL -> showSimpleDialog("Say hi to the criminals!", "You're at the jail :) enjoy while it lasts!");
             case GO_TO_JAIL -> {
                 player.goToJail();
@@ -101,15 +115,25 @@ public final class CurrentTurnDialog extends JDialog {
         if (result.firstDie != result.secondDie) finishTurn();
     }
 
-    private void handleWildSpace(String header) {
-        Random r = new Random();
-        if (r.nextInt(1, 6) != 4) {
-            player.addOutOfJailCards(1);
-            showSimpleDialog(header, "You got a get out of jail for free card!");
-        } else {
-            player.goToJail();
-            showSimpleDialog(header, "Go to jail, right away! Unlucky day for you. :(");
-        }
+    private boolean handleWildSpace(boolean isChance, int seed) {
+        Random r = new Random(seed);
+
+        int index;
+        if (isChance) index = r.nextInt(0, 12);
+        else index = r.nextInt(0, 16);
+
+        ActionCard card;
+        if (isChance) card = WildcardHelper.chanceCards.get(index);
+        else card = WildcardHelper.communityCards.get(index);
+
+        showSimpleDialog(card.title, card.description);
+
+        boolean bankrupt;
+        if (isChance) bankrupt = GameHelper.useChanceCard(card.actionId);
+        else bankrupt = GameHelper.useCommunityCard(card.actionId);
+
+        if (bankrupt) showSimpleDialog("You went bankrupt!", "That's really sad. Better luck next time!");
+        return bankrupt;
     }
 
     private boolean tryEscapeJail() {
