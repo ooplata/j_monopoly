@@ -37,7 +37,7 @@ public final class WildcardHelper {
      */
     public static ActionCard getWildCardFromString(String str, String name) {
         String[] split = str.split("_");
-        return new ActionCard(CardType.WILD, name, split[1], Integer.getInteger(split[0]));
+        return new ActionCard(CardType.WILD, name, split[1], Integer.parseInt(split[0]));
     }
 
     private static void addChanceCardToList(String str) {
