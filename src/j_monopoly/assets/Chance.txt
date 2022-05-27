@@ -5,7 +5,7 @@
 2_Advance to Illinois Avenue. If you pass Go, collect $200
 3_Advance to St. Charles Place. If you pass Go, collect $200
 4_Bank pays you dividend of $50
-5_Out
+5_You got a get out of jail free card!
 6_Go Back 3 Spaces
 7_Go to Jail. Go directly to Jail, do not pass Go, do not collect $200
 8_Make general repairs on all your property. For each house pay $25. For each hotel pay $100

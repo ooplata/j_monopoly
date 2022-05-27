@@ -4,7 +4,7 @@
 1_Bank error in your favor. Collect $200
 2_Doctor’s fee. Pay $50
 3_From sale of stock you get $50
-4_Out
+4_You got a get out of jail free card!
 5_Go to Jail. Go directly to jail, do not pass Go, do not collect $200
 6_Holiday fund matures. Receive $100
 7_Income tax refund. Collect $20
