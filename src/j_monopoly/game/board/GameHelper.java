@@ -195,11 +195,10 @@ public final class GameHelper {
                     player.money -= amount;
                     earnings += amount;
                 } else {
-                    Players.players.removeFirstOccurrence(curr);
+                    Players.players.removeFirstOccurrence(player);
                     currentPlayerIndex -= 1;
 
-                    earnings += curr.money;
-                    curr.goBankrupt();
+                    earnings += player.goBankrupt();
                 }
             }
         }
