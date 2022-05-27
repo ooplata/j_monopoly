@@ -166,7 +166,10 @@ public final class CurrentTurnDialog extends JDialog {
     private void onOK() {
         handleTurn((String) Objects.requireNonNull(optionBox.getSelectedItem()));
         if (hideWhenDone) dispose();
-        else setVisible(true);
+        else {
+            money.setText("You have $" + player.money);
+            setVisible(true);
+        }
     }
 
     private void onCancel() {
