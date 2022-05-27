@@ -20,6 +20,8 @@ PropertyCard *-- Spaces
 Space *-- Spaces
 SpaceType *-- Spaces
 
+ActionCard *-- WildcardHelper
+
 Player *-- AllPropertiesDialog
 
 Player *-- BuildDialog
@@ -153,6 +155,9 @@ class GameHelper {
 
     +rollTwoDice(): RollResult<Object>
 
+    +useChanceCard(int actionId): boolean
+    +useCommunityCard(int actionId): boolean
+
     +bankrupt(): int
 
     +finishTurn(): boolean
@@ -174,6 +179,14 @@ class Spaces {
 
     +getSpaceTypeFromString(String str): SpaceType
     +getPropertyCardFromString(String str): PropertyCard
+}
+
+class WildcardHelper {
+    +chanceCards: LinkedList<ActionCard>
+    +communityCards: LinkedList<ActionCard>
+
+    +populateLists()
+    +getWildCardFromString(String str, String name): ActionCard
 }
 
 object JDialog
